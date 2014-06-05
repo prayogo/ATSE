@@ -42,9 +42,16 @@ public class Adapter {
     public List getProduct(String _text, String _price){
         String query = "SELECT a.* "+
                     "FROM msproduct a "+
-                    "JOIN ltpricerange b on a.price between b.price1 and b.price2 "+
+                    "JOIN ltpricerange b on a.price between b.price1 and case when b.price2 = 0 then a.price else b.price2 end "+
                     "WHERE (a.name like '%"+_text+"%' or a.description like '%"+_text+"%') and "+
                     "b.pricerangeid = (case when "+_price+" = 0 then b.pricerangeid else "+_price+" end)";
+        list = sess.createSQLQuery(query).addEntity(Product.class).list();
+        return list;
+    }
+    
+    public List getProduct(){
+        String query = "SELECT a.* "+
+                    "FROM msproduct a ORDER BY a.name";
         list = sess.createSQLQuery(query).addEntity(Product.class).list();
         return list;
     }
