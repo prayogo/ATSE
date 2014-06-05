@@ -55,4 +55,19 @@ public class Adapter {
         list = sess.createSQLQuery(query).addEntity(Product.class).list();
         return list;
     }
+    
+    public boolean insertUser(User _user){
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try{
+            sess.save(_user);            
+            transaction.commit();
+        }catch(Exception ex){
+            transaction.rollback();
+            return false;
+        }
+        
+        return true;        
+    }
+
 }

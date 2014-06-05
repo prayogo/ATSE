@@ -16,6 +16,14 @@
         <servlet-name>DoSearch</servlet-name>
         <servlet-class>servlet.DoSearch</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoRegister</servlet-name>
+        <servlet-class>servlet.DoRegister</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoOrder</servlet-name>
+        <servlet-class>servlet.DoOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -32,6 +40,14 @@
         <servlet-name>DoSearch</servlet-name>
         <url-pattern>/DoSearch</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoRegister</servlet-name>
+        <url-pattern>/DoRegister</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoOrder</servlet-name>
+        <url-pattern>/DoOrder</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -44,4 +60,4 @@
     <error-page>
         <location>/pagenotfound.jsp</location>
     </error-page>-->
-    </web-app>
+</web-app>
