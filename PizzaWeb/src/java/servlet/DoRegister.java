@@ -1,5 +1,6 @@
 package servlet;
 
+import bean.Role;
 import bean.User;
 import controller.Adapter;
 import controller.Function;
@@ -56,7 +57,9 @@ public class DoRegister extends HttpServlet {
         }
         else{
             Adapter _adap = new Adapter();
-            User _userClass = new User(_name, _pass, _name, _email, _phone, _address, 0);
+            Role _role = new Role(2,"Member");
+            User _userClass = new User(_name, _pass, _name, _email, _phone, _address);
+            _userClass.setRole(_role);
             if(_adap.insertUser(_userClass)){
                 response.getWriter().print("s");                
             }

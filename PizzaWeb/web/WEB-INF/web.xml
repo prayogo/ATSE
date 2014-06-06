@@ -24,6 +24,10 @@
         <servlet-name>DoOrder</servlet-name>
         <servlet-class>servlet.DoOrder</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoOrder</servlet-name>
+        <servlet-class>servlet.DoOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>DoRegister</servlet-name>
         <url-pattern>/DoRegister</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoOrder</servlet-name>
+        <url-pattern>/DoOrder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DoOrder</servlet-name>

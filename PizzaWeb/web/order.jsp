@@ -51,7 +51,7 @@
                     %>
                     <div class="col-45" style="margin-bottom:5px; margin-right:20px;">
                         <form action="DoOrder" method="POST">
-                            <input type="hidden" id="productID" name="productID">
+                            <input type="hidden" id="productID" name="productID" value="<%= _product.getProductid() %>">
                             <div style="width:35%;overflow:hidden; display:inline-block;vertical-align: middle;">
                                 <label for="" style="font-weight:normal"><%= _product.getName() %></label>
                             </div>

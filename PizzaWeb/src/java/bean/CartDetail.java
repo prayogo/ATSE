@@ -10,8 +10,6 @@ package bean;
  */
 public class CartDetail {
     private int cartdetailid;
-    private int cartheaderid;
-    private int productid;
     private int qty;
     private CartHeader header;
     private Product product;
@@ -19,17 +17,13 @@ public class CartDetail {
     public CartDetail() {
     }
 
-    public CartDetail(int cartdetailid, int cartheaderid, int productid, int qty) {
+    public CartDetail(int cartdetailid, int qty) {
         this.cartdetailid = cartdetailid;
-        this.cartheaderid = cartheaderid;
-        this.productid = productid;
         this.qty = qty;
     }
 
-    public CartDetail(int cartdetailid, int cartheaderid, int productid, int qty, CartHeader header, Product product) {
+    public CartDetail(int cartdetailid, int qty, CartHeader header, Product product) {
         this.cartdetailid = cartdetailid;
-        this.cartheaderid = cartheaderid;
-        this.productid = productid;
         this.qty = qty;
         this.header = header;
         this.product = product;
@@ -37,14 +31,6 @@ public class CartDetail {
    
     public int getCartdetailid() {
         return cartdetailid;
-    }
-
-    public int getCartheaderid() {
-        return cartheaderid;
-    }
-
-    public int getProductid() {
-        return productid;
     }
 
     public int getQty() {
@@ -61,14 +47,6 @@ public class CartDetail {
 
     public void setCartdetailid(int cartdetailid) {
         this.cartdetailid = cartdetailid;
-    }
-
-    public void setCartheaderid(int cartheaderid) {
-        this.cartheaderid = cartheaderid;
-    }
-
-    public void setProductid(int productid) {
-        this.productid = productid;
     }
 
     public void setQty(int qty) {

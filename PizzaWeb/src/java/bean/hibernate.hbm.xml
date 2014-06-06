@@ -76,7 +76,7 @@
         <many-to-one name="user" class="bean.User" fetch="select" >
             <column name="userid" not-null="true" />
         </many-to-one>
-        <property name="orderdate" column="orderdate" type="date" />
+        <property name="orderdate" column="orderdate" type="string" />
         <set name="details" table="trcartdetail">
             <key>
                 <column name="cartheaderid" not-null="true" />
