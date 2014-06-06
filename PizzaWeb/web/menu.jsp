@@ -36,7 +36,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>Menu - Grazie Pizza</title>
 <link href="css/main.css" rel="stylesheet">
 <script src="js/main.js"></script>
 </head>
@@ -96,20 +96,23 @@
         <div>
         
         <%
+            int margin = 14;
             for(int i = ((_currPage - 1) * _perPage); i < _listProduct.size() && i < (_perPage*_currPage); i++){
                 Product _product = (Product)_listProduct.get(i);
+                if (i+1%3 == 0){margin = 0;}else{margin=14;}
         %>
-          <div class="col-30" style="margin-right:20px">
+          <div class="col-31" style="margin-right:<%=margin%>px">
             <div class="thumbnail"> 
             	<img src="img/meatlovers_540x540.jpg" alt="" >
-              	<div class="caption">
-                	<span style="height:19px; overflow:hidden; font-size:20px; font-weight:700">
-                    	<%= _product.getName() %> <i class="nav-menu-red-normal" style="font-size:12px"> 
-                        Rp. <%= formatter.format(_product.getPrice())%></i></span>
+              	<div class="caption" name="caption">
+                	<span style="height:28px; display:block; overflow:hidden; font-size:20px; font-weight:700">
+                    	<%= _product.getName() %></span>
+                        <p style="margin:0"><i class="nav-menu-red-normal" style="font-size:12px;"> 
+                        Rp. <%= formatter.format(_product.getPrice())%></i></p>
                 <p style="height:45px;overflow:hidden;font-size:11px; margin-top:4px;margin-bottom:4px;"><%= _product.getDescription() %></p>
                 <p style="text-align:right; height:35px; margin:0">
                   <% if (role.equals("1") || role.equals("2")){ %>
-                  <a href="order.jsp" class="button-red button-sm" style="width:auto; text-align:left;">
+                  <a href="order.jsp?id=<%= _product.getProductid() %>" class="button-red button-sm" style="width:auto; text-align:left;">
                   	<span class="glyphicon glyphicon-usd" style="width:auto"></span> Order Now</a>
                   <% } else { %>
                   <a href="register.jsp" class="nav-menu-red"><i>Please register to order</i></a>
@@ -208,6 +211,9 @@
 <%
     out.print("<script>");
     out.print("document.getElementById('txtName').value = '"+_NameSearch+"';");
-    out.print("document.getElementById('cmbPrice').value = "+_SearchPrice);
+    out.print("document.getElementById('cmbPrice').value = "+_SearchPrice+";");
+    if (session.getAttribute("searchName") != null) {
+        out.print("highlight('"+(session.getAttribute("searchName").toString())+"');");
+    }
     out.print("</script>");
 %>
