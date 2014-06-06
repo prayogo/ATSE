@@ -15,25 +15,23 @@ public class User {
     private String name;
     private String email;
     private String phone;
-    private String address;
-    private int roleid;
+    private String address;    
     private Role role;
 
     public User() {
     }
-
-    public User(int userid, String username, String password, String name, String email, String phone, String address, int roleid) {
-        this.userid = userid;
+    
+    public User(String username, String password, String name, String email, String phone, String address, Role role) {        
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.roleid = roleid;
+        this.role = role;
     }
-
-    public User(int userid, String username, String password, String name, String email, String phone, String address, int roleid, Role role) {
+    
+    public User(int userid, String username, String password, String name, String email, String phone, String address, Role role) {
         this.userid = userid;
         this.username = username;
         this.password = password;
@@ -41,7 +39,6 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.roleid = roleid;
         this.role = role;
     }
 
@@ -71,10 +68,6 @@ public class User {
 
     public String getAddress() {
         return address;
-    }
-
-    public int getRoleid() {
-        return roleid;
     }
 
     public Role getRole() {
@@ -107,10 +100,6 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setRoleid(int roleid) {
-        this.roleid = roleid;
     }
 
     public void setRole(Role role) {

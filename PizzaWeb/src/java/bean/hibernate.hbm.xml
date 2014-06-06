@@ -1,98 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE hibernate-mapping PUBLIC
-  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="bean.Role" table="ltrole">
-        <id column="roleid" name="roleid" type="integer"/>
-        <property column="role" name="role" type="string" />
-    </class>
-    
-    <class name="bean.PriceRange" table="ltpricerange">
-        <id column="pricerangeid" name="pricerangeid" type="integer"/>
-        <property column="price1" name="price1" type="integer" />
-        <property column="price2" name="price2" type="integer" />
-    </class>
-    
-    <class name="bean.User" table="msuser">
-        <id column="userid" name="userid" type="integer"/>
-        <property column="username" name="username" type="string" />
-        <property column="password" name="password" type="string" />
-        <property column="name" name="name" type="string" />
-        <property column="email" name="email" type="string" />
-        <property column="phone" name="phone" type="string" />
-        <property column="address" name="address" type="string" />
-        <many-to-one name="role" class="bean.Role">
-            <column name="roleid" not-null="true" /> 
-        </many-to-one>
-    </class>
-    
-    <class name="bean.Product" table="msproduct">
-        <id column="productid" name="productid" type="integer"/>
-        <property column="name" name="name" type="string" />
-        <property column="description" name="description" type="string" />
-        <property column="price" name="price" type="integer" />
-        <property column="image" name="image" type="string" />
-    </class>
-    
-    <class name="bean.Status" table="ltstatus">
-        <id column="statusid" name="statusid" type="integer"/>
-        <property column="status" name="status" type="string" />
-    </class>
-    
-    <class name="bean.TransactionHeader" table="trtransactionheader">
-        <id name="transactionheaderid" column="transactionheaderid" type="integer" />
-        <many-to-one name="user" class="bean.User" fetch="select" >
-            <column name="userid" not-null="true" />
-        </many-to-one>
-        <many-to-one name="status" class="bean.Status" fetch="select" >
-            <column name="statusid" not-null="true" />
-        </many-to-one>
-        <property name="orderdate" column="orderdate" type="date" />
-        <set name="details" cascade="all">
-            <key>
-                <column name="transactionheaderid" not-null="true" />
-            </key>
-            <one-to-many class="bean.TransactionDetail" />
-        </set>
-    </class>
-    
-    <class name="bean.TransactionDetail" table="trtransactiondetail">
-        <id name="transactiondetailid" column="transactiondetailid" type="integer" />
-        <many-to-one name="header" class="bean.TransactionHeader">
-            <column name="transactionheaderid" not-null="true" /> 
-        </many-to-one>
-        <many-to-one name="product" class="bean.Product">
-            <column name="productid" not-null="true" />
-        </many-to-one>
-        <property name="price" column="price" type="integer" />
-        <property name="qty" column="qty" type="integer" />
-    </class>
-    
-    <class name="bean.CartHeader" table="trcartheader">
-        <id name="cartheaderid" column="cartheaderid" type="integer" />
-        <many-to-one name="user" class="bean.User" fetch="select" >
-            <column name="userid" not-null="true" />
-        </many-to-one>
-        <property name="orderdate" column="orderdate" type="date" />
-        <set name="details" table="trcartdetail">
-            <key>
-                <column name="cartheaderid" not-null="true" />
-            </key>
-            <one-to-many class="bean.CartDetail" />
-        </set>
-    </class>
-    
-    <class name="bean.CartDetail" table="trcartdetail">
-        <id name="cartdetailid" column="cartdetailid" type="integer" />
-        <many-to-one name="header" class="bean.CartHeader">
-            <column name="cartheaderid" not-null="true" /> 
-        </many-to-one>
-        <many-to-one name="product" class="bean.Product">
-            <column name="productid" not-null="true" />
-        </many-to-one>
-        <property name="qty" column="qty" type="integer" />
-    </class>
+  <class name="bean.Role" table="ltrole">
+    <id column="roleid" name="roleid" type="integer"/>
+    <property column="role" name="role" type="string"/>
+  </class>
+  <class name="bean.PriceRange" table="ltpricerange">
+    <id column="pricerangeid" name="pricerangeid" type="integer"/>
+    <property column="price1" name="price1" type="integer"/>
+    <property column="price2" name="price2" type="integer"/>
+  </class>
+  <class name="bean.User" table="msuser">
+    <id column="userid" name="userid" type="integer"/>
+    <property column="username" name="username" type="string"/>
+    <property column="password" name="password" type="string"/>
+    <property column="name" name="name" type="string"/>
+    <property column="email" name="email" type="string"/>
+    <property column="phone" name="phone" type="string"/>
+    <property column="address" name="address" type="string"/>
+    <many-to-one class="bean.Role" name="role">
+      <column name="roleid" not-null="true"/>
+    </many-to-one>
+  </class>
+  <class name="bean.Product" table="msproduct">
+    <id column="productid" name="productid" type="integer"/>
+    <property column="name" name="name" type="string"/>
+    <property column="description" name="description" type="string"/>
+    <property column="price" name="price" type="integer"/>
+    <property column="image" name="image" type="string"/>
+  </class>
+  <class name="bean.Status" table="ltstatus">
+    <id column="statusid" name="statusid" type="integer"/>
+    <property column="status" name="status" type="string"/>
+  </class>
+  <class name="bean.TransactionHeader" table="trtransactionheader">
+    <id column="transactionheaderid" name="transactionheaderid" type="integer"/>
+    <many-to-one class="bean.User" fetch="select" name="user">
+      <column name="userid" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="bean.Status" fetch="select" name="status">
+      <column name="statusid" not-null="true"/>
+    </many-to-one>
+    <property column="orderdate" name="orderdate" type="date"/>
+    <set cascade="all" name="details">
+      <key>
+        <column name="transactionheaderid" not-null="true"/>
+      </key>
+      <one-to-many class="bean.TransactionDetail"/>
+    </set>
+  </class>
+  <class name="bean.TransactionDetail" table="trtransactiondetail">
+    <id column="transactiondetailid" name="transactiondetailid" type="integer"/>
+    <many-to-one class="bean.TransactionHeader" name="header">
+      <column name="transactionheaderid" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="bean.Product" name="product">
+      <column name="productid" not-null="true"/>
+    </many-to-one>
+    <property column="price" name="price" type="integer"/>
+    <property column="qty" name="qty" type="integer"/>
+  </class>
+  <class name="bean.Cart" table="trcart">
+    <id column="cartid" name="cartid" type="integer">
+        <generator class="increment"></generator>
+    </id>
+    <many-to-one class="bean.User" name="user">
+      <column name="userid" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="bean.Product" name="product">
+      <column name="productid" not-null="true"/>
+    </many-to-one>
+    <property column="qty" name="qty" type="integer"/>
+  </class>
 </hibernate-mapping>

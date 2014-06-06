@@ -17,8 +17,8 @@
         String _pass = "";
         Cookie[] cookies = request.getCookies();
 
-        if( cookies != null ){            
-			for(int i = 0; i < cookies.length; i++)
+		if (cookies != null){
+            for(int i = 0; i < cookies.length; i++)
             { 
                 Cookie c = cookies[i];
                 if (c.getName().equals("USPizzaWeb"))
@@ -33,7 +33,9 @@
                 response.sendRedirect("DoLogin");
             }
 		}
+
     }
+
     String total = "0";
     if (application.getAttribute("onlineUser") != null) {
         total = application.getAttribute("onlineUser").toString();

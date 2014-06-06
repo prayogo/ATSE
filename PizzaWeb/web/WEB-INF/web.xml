@@ -16,6 +16,26 @@
         <servlet-name>DoSearch</servlet-name>
         <servlet-class>servlet.DoSearch</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoRegister</servlet-name>
+        <servlet-class>servlet.DoRegister</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoOrder</servlet-name>
+        <servlet-class>servlet.DoOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoUpdateCustomer</servlet-name>
+        <servlet-class>servlet.DoUpdateCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoDeleteCustomer</servlet-name>
+        <servlet-class>servlet.DoDeleteCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoUpdateProduct</servlet-name>
+        <servlet-class>servlet.DoUpdateProduct</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -32,6 +52,26 @@
         <servlet-name>DoSearch</servlet-name>
         <url-pattern>/DoSearch</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoRegister</servlet-name>
+        <url-pattern>/DoRegister</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoOrder</servlet-name>
+        <url-pattern>/DoOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoUpdateCustomer</servlet-name>
+        <url-pattern>/DoUpdateCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoDeleteCustomer</servlet-name>
+        <url-pattern>/DoDeleteCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoUpdateProduct</servlet-name>
+        <url-pattern>/DoUpdateProduct</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -44,4 +84,4 @@
     <error-page>
         <location>/pagenotfound.jsp</location>
     </error-page>-->
-    </web-app>
+</web-app>
