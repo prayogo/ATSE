@@ -1,3 +1,4 @@
+
 package servlet;
 
 import bean.Role;
@@ -10,20 +11,44 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
-public class DoRegister extends HttpServlet {
-        
+public class DoUpdateCustomer extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String _user = request.getParameter("txtUsername");
+        HttpSession session = request.getSession();
+        
+        if(session.getAttribute("loginUser") == null){
+            response.sendRedirect("index.jsp");
+        }
+        
+        int roleid = ((User)session.getAttribute("loginUser")).getRole().getRoleid();
+        if(roleid != 1){
+            response.sendRedirect("index.jsp");            
+        }   
+        
+        String _userid = request.getParameter("userid");
+        String _user = request.getParameter("username");
         String _pass = request.getParameter("txtPassword");
         String _confPass = request.getParameter("txtConfirmPass");
         String _name = request.getParameter("txtName");
         String _address = request.getParameter("txtAddress");
         String _email = request.getParameter("txtEmail");
         String _phone = request.getParameter("txtPhone");
+        int _roleUser = Integer.parseInt(request.getParameter("ddlRole"));
                 
         Function function = new Function();
         
@@ -54,23 +79,34 @@ public class DoRegister extends HttpServlet {
         
         Adapter _adap = new Adapter();
         
-        if(_adap.getUser("username", _user) != null)
+        if(_adap.getUser("username", _user) != null && (_adap.getUser("username", _user)).getUserid() != Integer.parseInt(_userid))
             _errMsg.setCharAt(7,'1');
-        if(_adap.getUser("email", _email) != null)
+        if(_adap.getUser("email", _email) != null && (_adap.getUser("username", _user)).getUserid() != Integer.parseInt(_userid))
             _errMsg.setCharAt(8,'1');
         
         if(!_errMsg.toString().equals("000000000")){
-            response.sendRedirect("register.jsp?errMsg=" + _errMsg.toString());
+            response.sendRedirect("update-customer.jsp?userid="+_userid+"&errMsg=" + _errMsg.toString());
         }
         else{            
             Role _roleClass = new Role();
-            _roleClass.setRoleid(2);
-            User _userClass = new User(_user, _pass, _name, _email, _phone, _address, _roleClass);
-            if(_adap.insertUser(_userClass)){
-                response.sendRedirect("index.jsp");
+            _roleClass.setRoleid(_roleUser);
+            
+            User _userClass = new User();
+            
+            _userClass = _adap.getUser("userid", _userid);
+            
+            _userClass.setPassword(_pass);
+            _userClass.setName(_name);
+            _userClass.setAddress(_address);
+            _userClass.setEmail(_email);
+            _userClass.setPhone(_phone);
+            _userClass.setRole(_roleClass);
+            
+            if(_adap.updateUser(_userClass)){
+                response.sendRedirect("customer.jsp");
             }
             else{
-                response.sendRedirect("register.jsp?errMsg=2");
+                response.sendRedirect("update-customer.jsp?userid="+_userid+"&errMsg=2");
             }
         }
     }
@@ -88,7 +124,7 @@ public class DoRegister extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

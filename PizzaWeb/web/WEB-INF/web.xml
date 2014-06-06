@@ -25,8 +25,16 @@
         <servlet-class>servlet.DoOrder</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DoOrder</servlet-name>
-        <servlet-class>servlet.DoOrder</servlet-class>
+        <servlet-name>DoUpdateCustomer</servlet-name>
+        <servlet-class>servlet.DoUpdateCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoDeleteCustomer</servlet-name>
+        <servlet-class>servlet.DoDeleteCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoUpdateProduct</servlet-name>
+        <servlet-class>servlet.DoUpdateProduct</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
@@ -53,8 +61,16 @@
         <url-pattern>/DoOrder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DoOrder</servlet-name>
-        <url-pattern>/DoOrder</url-pattern>
+        <servlet-name>DoUpdateCustomer</servlet-name>
+        <url-pattern>/DoUpdateCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoDeleteCustomer</servlet-name>
+        <url-pattern>/DoDeleteCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoUpdateProduct</servlet-name>
+        <url-pattern>/DoUpdateProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

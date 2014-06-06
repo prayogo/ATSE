@@ -73,60 +73,58 @@ public class DoLogin extends HttpServlet {
         String _pass = "";
         
         Cookie[] cookies = request.getCookies();
-        if (cookies != null){
-            for(int i = 0; i < cookies.length; i++)
-            { 
-                Cookie c = cookies[i];
-                if (c.getName().equals("USPizzaWeb"))
-                {
-                    _user = c.getValue();
-                    c.setMaxAge(24*60*60);
-                }else if (c.getName().equals("PWPizzaWeb"))
-                {
-                    _pass = c.getValue();
-                    c.setMaxAge(24*60*60);
-                }
+        for(int i = 0; i < cookies.length; i++)
+        { 
+            Cookie c = cookies[i];
+            if (c.getName().equals("USPizzaWeb"))
+            {
+                _user = c.getValue();
+                c.setMaxAge(24*60*60);
+            }else if (c.getName().equals("PWPizzaWeb"))
+            {
+                _pass = c.getValue();
+                c.setMaxAge(24*60*60);
             }
-
-            String _err = "";
-            if (_user.equals("")){
-                _err = "1";
-                session.setAttribute("errLogin", _err);
-                response.sendRedirect("index.jsp");
-            }else if (_pass.equals("")){
-                _err = "2";
-                session.setAttribute("errLogin", _err);
-                response.sendRedirect("index.jsp");
-            }else{
-                try{
-                    Adapter _adap = new Adapter();
-                    User _userClass = _adap.getUserSingle(_user, _pass);
-                    if (_userClass != null && _userClass.getUsername() != null){
-                        session.setAttribute("loginUser", _userClass);
-                        if(app.getAttribute("onlineUser") == null){
-                            app.setAttribute("onlineUser", 1); 
-                        } else {
-                            int total = Integer.parseInt(app.getAttribute("onlineUser").toString());
-                            app.setAttribute("onlineUser", total + 1);
-                        }
-                        String _gotoURL = "index";
-                        if (session.getAttribute("gotoURL") != null){
-                            _gotoURL = session.getAttribute("gotoURL").toString();
-                            session.removeAttribute("gotoURL");
-                        }
-                        response.sendRedirect(_gotoURL+".jsp");
+        }
+        
+        String _err = "";
+        if (_user.equals("")){
+            _err = "1";
+            session.setAttribute("errLogin", _err);
+            response.sendRedirect("index.jsp");
+        }else if (_pass.equals("")){
+            _err = "2";
+            session.setAttribute("errLogin", _err);
+            response.sendRedirect("index.jsp");
+        }else{
+            try{
+                Adapter _adap = new Adapter();
+                User _userClass = _adap.getUserSingle(_user, _pass);
+                if (_userClass != null && _userClass.getUsername() != null){
+                    session.setAttribute("loginUser", _userClass);
+                    if(app.getAttribute("onlineUser") == null){
+                        app.setAttribute("onlineUser", 1); 
+                    } else {
+                        int total = Integer.parseInt(app.getAttribute("onlineUser").toString());
+                        app.setAttribute("onlineUser", total + 1);
                     }
-                    else{
-                        _err = "3";
-                        session.setAttribute("errLogin", _err);
-                        response.sendRedirect("index.jsp");
+                    String _gotoURL = "index";
+                    if (session.getAttribute("gotoURL") != null){
+                        _gotoURL = session.getAttribute("gotoURL").toString();
+                        session.removeAttribute("gotoURL");
                     }
+                    response.sendRedirect(_gotoURL+".jsp");
                 }
-                catch(IOException ex){
-                    _err = "4";
+                else{
+                    _err = "3";
                     session.setAttribute("errLogin", _err);
                     response.sendRedirect("index.jsp");
                 }
+            }
+            catch(IOException ex){
+                _err = "4";
+                session.setAttribute("errLogin", _err);
+                response.sendRedirect("index.jsp");
             }
         }
     }

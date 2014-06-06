@@ -1,3 +1,5 @@
+<%@page import="controller.Adapter"%>
+<%@page import="bean.Product"%>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html>
 <html>
@@ -12,15 +14,28 @@
   <%@include file="header.jsp" %>
   <div>
     <%
-		String _idProduct = "";
-		String _header = "Add Product Data";
-		if (request.getParameter("id") != null){
-			_idProduct = request.getParameter("id");
-			_header = "Update Product Data";
-		}
-		else{
-			
-		}
+            if(session.getAttribute("loginUser") == null){
+                response.sendRedirect("index.jsp");
+                return;
+            }
+            int roleid = ((User)session.getAttribute("loginUser")).getRole().getRoleid();
+            if(roleid != 1){
+                response.sendRedirect("index.jsp");
+                return;
+            }   
+            
+            Adapter _adap = new Adapter();
+            Product _product = new Product();
+            String _idProduct = "";
+            String _action = "DoInsertProduct";
+            String _header = "Add Product Data";
+            if (request.getParameter("id") != null){
+                    _idProduct = request.getParameter("id");
+                    _header = "Update Product Data";
+                    
+                    _product = _adap.getProductSingle(_idProduct);                    
+                    _action = "DoUpdateProduct";
+            }
 		
 	%>
     <h1 class="page-header nav-menu-red" style="font-size:20px; text-align:center"><%= _header %></h1>
@@ -38,36 +53,37 @@
     </div>
     <% } %>
     <div style="padding:20px; padding-top:10px">
-      <form>
+      <form action="<%=_action%>">
+           <input type="hidden" name="productId" value="<%=_idProduct%>">
         <div style="margin-bottom:10px;">
           <label for="txtProductName" class="nav-menu-red" style="display:inline-block; width:20%">Name</label>
           <b class="nav-menu-red">:</b>
           <div style="width:50%; display:inline-block">
-            <input type="text" class="control" id="txtProductName" name="txtProductName">
+            <input type="text" class="control" id="txtProductName" name="txtProductName" value ="<%=_product.getName()%>">
           </div>
         </div>
         <div style="margin-bottom:10px;">
           <label for="txtProductDescription" class="nav-menu-red" style="display:inline-block; width:20%;">Description</label>
           <b class="nav-menu-red">:</b>
           <div style="width:50%; display:inline-block; vertical-align:middle">
-            <textarea class="control" style="height:140px;resize:none" id="txtProductDescription" name="txtProductDescription"></textarea>
+            <textarea class="control" style="height:140px;resize:none" id="txtProductDescription" name="txtProductDescription"><%=_product.getDescription()%></textarea>
           </div>
         </div>
         <div style="margin-bottom:5px;">
           <label for="txtProductPrice" class="nav-menu-red" style="display:inline-block; width:20%">Price</label>
           <b class="nav-menu-red">:</b>
           <div style="width:50%; display:inline-block">
-            <input type="text" class="control" id="txtProductPrice" name="txtProductPrice">
+            <input type="text" class="control" id="txtProductPrice" name="txtProductPrice" value ="<%=_product.getPrice()%>">
           </div>
         </div>
         <div style="margin-bottom:5px;">
           <label for="txtProductPrice" class="nav-menu-red" style="display:inline-block; width:20%">Image</label>
           <b class="nav-menu-red">:</b>
           <div style="display:inline-block">
-            <input type="file" id="fileImage" style="display:none">
+            <input type="file" id="fileImage" name="productImage" style="display:none">
             <div class="inputFile">
               <input type="button" value="Browse" class="button-red" id="btnFile" onClick="btnFileClick()"/>
-              <label id="lblFile" class="nav-menu-red-normal"></label>
+              <label id="lblFile" class="nav-menu-red-normal"><%=_product.getImage()%></label>
             </div>
           </div>
         </div>

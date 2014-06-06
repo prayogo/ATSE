@@ -569,13 +569,6 @@ font-size:14px;
 .col-30 *{
 	width:100%;
 }
-.col-31{
-	display:inline-block;
-	width:31.5%;
-}
-.col-31 *{
-	width:100%;
-}
 .col-40{
 	display:inline-block;
 	width:40%;

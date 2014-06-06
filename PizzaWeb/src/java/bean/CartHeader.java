@@ -14,23 +14,36 @@ import java.util.Set;
  */
 public class CartHeader {
     private int cartheaderid;
-    private String orderdate;
+    private int userid;
+    private Date orderdate;
     private User user;
     private Set<CartDetail> details = new HashSet();
 
     public CartHeader() {
     }
 
-    public CartHeader(int cartheaderid, int userid, String orderdate) {
+    public CartHeader(int cartheaderid, int userid, Date orderdate) {
         this.cartheaderid = cartheaderid;
+        this.userid = userid;
         this.orderdate = orderdate;
+    }
+
+    public CartHeader(int cartheaderid, int userid, Date orderdate, User user) {
+        this.cartheaderid = cartheaderid;
+        this.userid = userid;
+        this.orderdate = orderdate;
+        this.user = user;
     }
 
     public int getCartheaderid() {
         return cartheaderid;
     }
 
-    public String getOrderdate() {
+    public int getUserid() {
+        return userid;
+    }
+
+    public Date getOrderdate() {
         return orderdate;
     }
 
@@ -46,7 +59,11 @@ public class CartHeader {
         this.cartheaderid = cartheaderid;
     }
 
-    public void setOrderdate(String orderdate) {
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public void setOrderdate(Date orderdate) {
         this.orderdate = orderdate;
     }
 

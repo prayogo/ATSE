@@ -96,19 +96,16 @@
         <div>
         
         <%
-            int margin = 14;
             for(int i = ((_currPage - 1) * _perPage); i < _listProduct.size() && i < (_perPage*_currPage); i++){
                 Product _product = (Product)_listProduct.get(i);
-                if (i+1%3 == 0){margin = 0;}else{margin=14;}
         %>
-          <div class="col-31" style="margin-right:<%=margin%>px">
+          <div class="col-30" style="margin-right:20px">
             <div class="thumbnail"> 
             	<img src="img/meatlovers_540x540.jpg" alt="" >
               	<div class="caption">
-                	<span style="height:28px; display:block; overflow:hidden; font-size:20px; font-weight:700">
-                    	<%= _product.getName() %></span>
-                        <p style="margin:0"><i class="nav-menu-red-normal" style="font-size:12px;"> 
-                        Rp. <%= formatter.format(_product.getPrice())%></i></p>
+                	<span style="height:19px; overflow:hidden; font-size:20px; font-weight:700">
+                    	<%= _product.getName() %> <i class="nav-menu-red-normal" style="font-size:12px"> 
+                        Rp. <%= formatter.format(_product.getPrice())%></i></span>
                 <p style="height:45px;overflow:hidden;font-size:11px; margin-top:4px;margin-bottom:4px;"><%= _product.getDescription() %></p>
                 <p style="text-align:right; height:35px; margin:0">
                   <% if (role.equals("1") || role.equals("2")){ %>

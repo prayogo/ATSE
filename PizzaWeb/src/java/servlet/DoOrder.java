@@ -1,7 +1,6 @@
 package servlet;
 
-import bean.CartDetail;
-import bean.CartHeader;
+import bean.Cart;
 import bean.Product;
 import bean.User;
 import controller.Adapter;
@@ -28,40 +27,55 @@ public class DoOrder extends HttpServlet {
         Adapter _adap = new Adapter();
         if (_productId.equals("")) {
             _msg = "Please choose product options";
-            session.setAttribute("errLogin", _msg);
+            session.setAttribute("errOrderMsg", _msg);
             session.setAttribute("errOrderType", "fail");
             response.sendRedirect("order.jsp");
         } else if (_qty.equals("")) {
             _msg = "Please fill quantity before adding to cart";
-            session.setAttribute("errLogin", _msg);
+            session.setAttribute("errOrderMsg", _msg);
             session.setAttribute("errOrderType", "fail");
             response.sendRedirect("order.jsp");
         } else if (!_qty.equals("") && Integer.parseInt(_qty) < 1) {
             _msg = "Please fill quantity with non zero integer";
-            session.setAttribute("errLogin", _msg);
+            session.setAttribute("errOrderMsg", _msg);
             session.setAttribute("errOrderType", "fail");
             response.sendRedirect("order.jsp");
         }else if(_adap.getProduct(_productId).size() < 1){
             _msg = "Please choose product options";
-            session.setAttribute("errLogin", _msg);
+            session.setAttribute("errOrderMsg", _msg);
             session.setAttribute("errOrderType", "fail");
             response.sendRedirect("order.jsp");
         }else{
             User _user = (User)session.getAttribute("loginUser");
-            CartHeader _header = new CartHeader();
-            _header.setUser(_user);
-            Date now = new Date();  
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            _header.setOrderdate(sdf.format(now));
-            CartDetail _detail = new CartDetail();
-            _detail.setQty(Integer.parseInt(_qty));
-            _detail.setHeader(_header);
+            Cart _cart = new Cart();
+            List _cartList = _adap.getCartId(_user.getUserid(), Integer.parseInt(_productId));
+            int _cartIdInDB = 0;
+            int _qtyInDB = 0;
+            if (_cartList.size() > 0){
+                _qtyInDB = ((Cart)_cartList.get(0)).getQty();
+                _cartIdInDB = ((Cart)_cartList.get(0)).getCartid();
+            }
+            _cart.setUser(_user);
+            _cart.setCartid(_cartIdInDB);
+            _cart.setQty(Integer.parseInt(_qty) + _qtyInDB);
             Product _product = new Product();
             _product.setProductid(Integer.parseInt(_productId));
-            _detail.setProduct(_product);
+            _cart.setProduct(_product);
             
-            response.getWriter().print(_adap.insertCart(_header, _detail));
-            
+            _adap = new Adapter();
+            if (_adap.insertCart(_cart)){
+                _adap = new Adapter();
+                String productName = ((Product)_adap.getProduct(_productId).get(0)).getName();
+                _msg = _qty + " " + productName + "(s) Added to Cart";
+                session.setAttribute("errOrderMsg", _msg);
+                session.setAttribute("errOrderType", "success");
+                response.sendRedirect("order.jsp");
+            }else{
+                _msg = "Sorry, an error occurred while processing your request";
+                session.setAttribute("errOrderMsg", _msg);
+                session.setAttribute("errOrderType", "fail");
+                response.sendRedirect("order.jsp");
+            }
         }
 
     }

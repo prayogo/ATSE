@@ -2,19 +2,17 @@
     if (session.getAttribute("loginUser") == null) {
         boolean remember = false;
         Cookie[] cookies = request.getCookies();
-        if (cookies != null){
-            for(int i = 0; i < cookies.length; i++)
-            { 
-                Cookie c = cookies[i];
-                if (c.getName().equals("USPizzaWeb") || c.getName().equals("PWPizzaWeb"))
-                {
-                    remember = true;
-                    session.setAttribute("gotoURL", "cart");
-                }
+        for(int i = 0; i < cookies.length; i++)
+        { 
+            Cookie c = cookies[i];
+            if (c.getName().equals("USPizzaWeb") || c.getName().equals("PWPizzaWeb"))
+            {
+                remember = true;
+                session.setAttribute("gotoURL", "cart");
             }
-            if (!remember){
-                response.sendRedirect("pagenotfound.jsp");
-            }
+        }
+        if (!remember){
+            response.sendRedirect("pagenotfound.jsp");
         }
     }
 %>
