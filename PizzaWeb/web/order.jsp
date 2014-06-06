@@ -96,3 +96,11 @@
 </div>
 </body>
 </html>
+<%
+    if (session.getAttribute("errOrderMsg") != null){
+        session.removeAttribute("errOrderMsg");
+    }
+    if (session.getAttribute("errOrderType") != null){
+        session.removeAttribute("errOrderType");
+    }    
+%>

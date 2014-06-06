@@ -4,9 +4,10 @@
  */
 package controller;
 
+import bean.Cart;
 import bean.PriceRange;
-import bean.Product;
 import bean.Role;
+import bean.Product;
 import bean.User;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -18,13 +19,14 @@ import org.hibernate.Transaction;
  * @author prk
  */
 public class Adapter {
+
     Session sess;
     Transaction transaction;
     List list;
-        
+
     public Adapter() {
         sess = HibernateUtil.getSessionFactory().openSession();
-    }    
+    }
 
     public User getUserSingle(String _user, String _pass){
         User _userClass = null;
@@ -127,5 +129,46 @@ public class Adapter {
             return false;
         }        
         return true;        
+    }
+
+    public List getProduct() {
+        String query = "SELECT a.* "
+                + "FROM msproduct a ORDER BY a.name";
+        list = sess.createSQLQuery(query).addEntity(Product.class).list();
+        return list;
+    }
+
+    public List getProduct(String _productId) {
+        String query = "SELECT a.* "
+                + "FROM msproduct a WHERE a.productid = " + _productId;
+        list = sess.createSQLQuery(query).addEntity(Product.class).list();
+        return list;
+    }
+
+    public boolean insertCart(Cart _cart) {
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try {
+            sess.saveOrUpdate(_cart);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        }
+
+        return true;
+    }
+    
+    public List getCartId(int _userId, int _productId){
+        String query = "SELECT * "
+                + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;
+        list = sess.createSQLQuery(query).addEntity(Cart.class).list();
+        return list;
+    }
+    
+    protected void finalize ()  {
+        if (sess.isOpen()){
+            sess.close();
+        }
     }
 }
