@@ -4,8 +4,7 @@
  */
 package controller;
 
-import bean.CartDetail;
-import bean.CartHeader;
+import bean.Cart;
 import bean.PriceRange;
 import bean.Product;
 import bean.User;
@@ -80,12 +79,11 @@ public class Adapter {
         return true;
     }
 
-    public boolean insertCart(CartHeader _cart, CartDetail _cartDetail) {
+    public boolean insertCart(Cart _cart) {
         transaction = sess.beginTransaction();
         transaction.begin();
         try {
             sess.saveOrUpdate(_cart);
-            //sess.save(_cartDetail);
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
@@ -93,6 +91,13 @@ public class Adapter {
         }
 
         return true;
+    }
+    
+    public List getCartId(int _userId, int _productId){
+        String query = "SELECT * "
+                + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;
+        list = sess.createSQLQuery(query).addEntity(Cart.class).list();
+        return list;
     }
     
     protected void finalize ()  {
