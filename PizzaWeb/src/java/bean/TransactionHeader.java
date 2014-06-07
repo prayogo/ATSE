@@ -15,23 +15,25 @@ import java.util.Set;
 public class TransactionHeader {
     private int transactionheaderid;
     private int userid;
-    private Date orderdate;
+    private String orderdate;
     private int statusid;
     private User user;
     private Status status;
+    
     private Set<TransactionDetail> details = new HashSet();
+       
 
     public TransactionHeader() {
     }
 
-    public TransactionHeader(int transactionheaderid, int userid, Date orderdate, int statusid) {
+    public TransactionHeader(int transactionheaderid, int userid, String orderdate, int statusid) {
         this.transactionheaderid = transactionheaderid;
         this.userid = userid;
         this.orderdate = orderdate;
         this.statusid = statusid;
     }
 
-    public TransactionHeader(int transactionheaderid, int userid, Date orderdate, int statusid, User user, Status status) {
+    public TransactionHeader(int transactionheaderid, int userid, String orderdate, int statusid, User user, Status status) {
         this.transactionheaderid = transactionheaderid;
         this.userid = userid;
         this.orderdate = orderdate;
@@ -48,7 +50,7 @@ public class TransactionHeader {
         return userid;
     }
 
-    public Date getOrderdate() {
+    public String getOrderdate() {
         return orderdate;
     }
 
@@ -76,7 +78,7 @@ public class TransactionHeader {
         this.userid = userid;
     }
 
-    public void setOrderdate(Date orderdate) {
+    public void setOrderdate(String orderdate) {
         this.orderdate = orderdate;
     }
 

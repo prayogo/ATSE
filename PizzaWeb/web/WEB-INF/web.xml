@@ -56,6 +56,10 @@
         <servlet-name>DoUpdateStatus</servlet-name>
         <servlet-class>servlet.DoUpdateStatus</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetTransactionReport</servlet-name>
+        <servlet-class>servlet.GetTransactionReport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>DoUpdateStatus</servlet-name>
         <url-pattern>/DoUpdateStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetTransactionReport</servlet-name>
+        <url-pattern>/GetTransactionReport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

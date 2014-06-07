@@ -41,7 +41,7 @@
     <many-to-one class="bean.Status" fetch="select" name="status">
       <column name="statusid" not-null="true"/>
     </many-to-one>
-    <property column="orderdate" name="orderdate" type="date"/>
+    <property column="orderdate" name="orderdate" type="string"/>
     <set cascade="all" name="details">
       <key>
         <column name="transactionheaderid" not-null="true"/>
@@ -71,5 +71,15 @@
       <column name="productid" not-null="true"/>
     </many-to-one>
     <property column="qty" name="qty" type="integer"/>
+  </class>
+  <class name="bean.TransactionReport" >
+      <id column="transactionheaderid" name="transactionheaderid" type="integer"></id>
+      <property column="orderdate" name="orderdate" type="string"/>
+      <property column="status" name="status" type="string"/>
+      <property column="username" name="username" type="string"/>
+      <property column="name" name="name" type="string"/>
+      <property column="price" name="price" type="integer"/>
+      <property column="qty" name="qty" type="integer"/>
+      
   </class>
 </hibernate-mapping>

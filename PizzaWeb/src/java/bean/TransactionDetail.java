@@ -18,7 +18,7 @@ public class TransactionDetail implements Serializable{
     private int qty;
     private TransactionHeader header;
     private Product product;
-
+    
     public TransactionDetail() {
     }
 
