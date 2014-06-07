@@ -4,11 +4,7 @@
  */
 package controller;
 
-import bean.Cart;
-import bean.PriceRange;
-import bean.Role;
-import bean.Product;
-import bean.User;
+import bean.*;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -105,6 +101,20 @@ public class Adapter {
         String query = "select * from ltrole";
         list = sess.createSQLQuery(query).addEntity(Role.class).list();
 
+        return list;
+    }
+    
+    public List getListStatus(){
+        String query = "select * From ltstatus";
+        list = sess.createSQLQuery(query).addEntity(Status.class).list();
+        
+        return list;
+    }
+    
+    public List getListTransaction(){        
+        String query = "select * from trTransactionHeader order by orderdate desc";
+        list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
+        
         return list;
     }
 
