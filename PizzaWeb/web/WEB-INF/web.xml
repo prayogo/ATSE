@@ -56,6 +56,14 @@
         <servlet-name>DoUpdateStatus</servlet-name>
         <servlet-class>servlet.DoUpdateStatus</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoDeleteCart</servlet-name>
+        <servlet-class>servlet.DoDeleteCart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoConfirmCart</servlet-name>
+        <servlet-class>servlet.DoConfirmCart</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -111,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>DoUpdateStatus</servlet-name>
         <url-pattern>/DoUpdateStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoDeleteCart</servlet-name>
+        <url-pattern>/DoDeleteCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoConfirmCart</servlet-name>
+        <url-pattern>/DoConfirmCart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

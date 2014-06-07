@@ -60,7 +60,11 @@ function btnFileClick(){
     document.getElementById('fileImage').onchange = function (e)
     {
         var lblFile = document.getElementById('lblFile');
+        var productImage = document.getElementById('hdnProductImage');
+        
         lblFile.innerHTML = document.getElementById('fileImage').files[0].name;
+        productImage.value = document.getElementById('fileImage').files[0].name;
+        
     };
 }
 

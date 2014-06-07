@@ -8,7 +8,7 @@
             Cookie c = cookies[i];
             if (c.getName().equals("USPizzaWeb") || c.getName().equals("PWPizzaWeb")) {
                 remember = true;
-                session.setAttribute("gotoURL", "cart");
+                session.setAttribute("gotoURL", "order");
             }
         }
         if (!remember) {

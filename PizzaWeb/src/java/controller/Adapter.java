@@ -6,6 +6,7 @@ package controller;
 
 import bean.*;
 import java.util.List;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -205,6 +206,32 @@ public class Adapter {
         transaction.begin();
         try {
             sess.delete(_product);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        }
+        return true;
+    }
+    
+    //create new 18:11PM 7 Jun
+    public List getCartList(int _userId){
+        String query = "SELECT a.* "
+                + "FROM trcart a join msproduct b on a.productid = b.productid WHERE a.userid = " + _userId + " order by b.name";
+        list = sess.createSQLQuery(query).addEntity(Cart.class).list();
+        return list;
+    }
+    
+    //create new 18:11PM 7 Jun
+    public boolean deleteCart(List _cartList){
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try {
+            Cart _cart;
+            for(int i = 0; i < _cartList.size(); i++){
+                _cart = (Cart)_cartList.get(i);
+                sess.delete(_cart);
+            }
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();

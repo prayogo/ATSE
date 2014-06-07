@@ -16,6 +16,7 @@
         String _user = "";
         String _pass = "";
         Cookie[] cookies = request.getCookies();
+
 		if (cookies != null){
             for(int i = 0; i < cookies.length; i++)
             { 
@@ -32,6 +33,7 @@
                 response.sendRedirect("DoLogin");
             }
 		}
+
     }
 
     String total = "0";
