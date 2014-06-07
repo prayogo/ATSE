@@ -61,6 +61,10 @@
         <servlet-class>servlet.DoDeleteCart</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>GetTransactionReport</servlet-name>
+        <servlet-class>servlet.GetTransactionReport</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DoConfirmCart</servlet-name>
         <servlet-class>servlet.DoConfirmCart</servlet-class>
     </servlet>
@@ -123,6 +127,10 @@
     <servlet-mapping>
         <servlet-name>DoDeleteCart</servlet-name>
         <url-pattern>/DoDeleteCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetTransactionReport</servlet-name>
+        <url-pattern>/GetTransactionReport</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DoConfirmCart</servlet-name>

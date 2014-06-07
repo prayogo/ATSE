@@ -17,29 +17,40 @@
   <div>
     <h1 class="page-header nav-menu-red" style="font-size:20px; text-align:center">Transaction List</h1>    
     <div align="right" style="padding-right:20px;">
-    	<button class="button-red"><span class="glyphicon glyphicon-eye-open"></span> View Transaction Report</button></div>
+    	<a class="button-red" href="./GetTransactionReport"><span class="glyphicon glyphicon-eye-open"></span> View Transaction Report</a></div>
     <div style="padding:10px 20px">
     <%
-		DecimalFormat formatter = new DecimalFormat("#,###.00");
-                
-                Adapter _adap = new Adapter();
-                List _listTransaction;
-                _listTransaction = _adap.getListTransaction();
-                
-                for(int i = 0; i < _listTransaction.size(); i++){
-                    TransactionHeader _trHeader = (TransactionHeader)_listTransaction.get(i);
-                    List _listDetail, _listStatus;                    
-                    _listDetail = new ArrayList<TransactionDetail>(_trHeader.getDetails());
-                    int _totalPrice = 0;    
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-	%>
+        if(session.getAttribute("loginUser") == null){
+            response.sendRedirect("index.jsp");
+            return;
+        }
+        int roleid = ((User)session.getAttribute("loginUser")).getRole().getRoleid();
+        if(roleid != 1){
+            response.sendRedirect("index.jsp");
+            return;
+        }   
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+
+        Adapter _adap = new Adapter();
+        List _listTransaction;
+        _listTransaction = _adap.getListTransaction();
+
+        for(int i = 0; i < _listTransaction.size(); i++){
+            TransactionHeader _trHeader = (TransactionHeader)_listTransaction.get(i);
+            List _listDetail, _listStatus;                    
+            _listDetail = new ArrayList<TransactionDetail>(_trHeader.getDetails());
+            int _totalPrice = 0;    
+                    
+    %>
+    <form action="DoUpdateStatus" method="POST">
       <div class="box">
         <div style="color:#9E100B !important;margin-bottom:15px;height:32px">
+          <input type="hidden" value="<%=_trHeader.getTransactionheaderid()%>" name="idHeader" />
           <div class="col-30"> <b>Customer:</b> <%=_trHeader.getUser().getName()%></div>
-          <div class="col-30"> <b>Order Time:</b> <%=sdf.format(_trHeader.getOrderdate())%></div>
+          <div class="col-30"> <b>Order Time:</b> <%=_trHeader.getOrderdate()%></div>
           <div style="width:35%; display:inline-block"> <b>Status:</b> 
           	<div style="display:inline-block; width:50%">
-          	<select class="select" style="width:100%">
+          	<select class="select" style="width:100%" name="statusid">
                     <%
                         _listStatus = _adap.getListStatus();
                         for(int j = 0; j < _listStatus.size(); j++){
@@ -53,7 +64,7 @@
                     <%}%>
                 </select>
             </div>
-            <a class="button-red button-sm" style="margin-top:0; width:auto" href="./DoUpdateStatus?id=<%=_trHeader.getTransactionheaderid()%>">Change</a>
+            <button type="submit" class="button-red button-sm" style="margin-top:0; width:auto">Change</button>
           </div>
         </div>
         <table class="table table-striped" style="color:#9E100B !important;margin-bottom:15px;">
@@ -94,6 +105,7 @@
           </tfoot>
         </table>
       </div>
+    </form>
             <%}%>
     </div>
   </div>

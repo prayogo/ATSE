@@ -83,6 +83,18 @@ public class Adapter {
 
         return _product;
     }
+    
+    public List getTransactionReport(){
+        String query = "select a.transactionheaderid as transactionheaderid, a.orderdate as orderdate, d.status as status, c.username as username, e.name as name, b.price as price, b.qty as qty " +
+                        "from trtransactionheader a " +
+                        "join trtransactiondetail b on a.transactionheaderid = b.transactionheaderid " +
+                        "join msuser c on a.userid = c.userid " +
+                        "join ltstatus d on a.statusid = d.statusid " +
+                        "join msproduct e on b.productid = e.productid ";
+        list = sess.createSQLQuery(query).addEntity(TransactionReport.class).list();
+        
+        return list;
+    }
 
     public User getUser(String column, String value) {
 
@@ -104,19 +116,30 @@ public class Adapter {
 
         return list;
     }
-    
+    //new by Sun
     public List getListStatus(){
         String query = "select * From ltstatus";
         list = sess.createSQLQuery(query).addEntity(Status.class).list();
         
         return list;
     }
-    
+    //new by Sun
     public List getListTransaction(){        
         String query = "select * from trTransactionHeader order by orderdate desc";
         list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
         
         return list;
+    }
+    //new by Sun
+    public TransactionHeader getTrHeader(String _trHeaderId){
+        String query = "select * from trTransactionHeader where transactionheaderid =" + _trHeaderId;
+        list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
+        
+        TransactionHeader _trHeader = new TransactionHeader();
+        if(!list.isEmpty())
+            _trHeader = (TransactionHeader)list.get(0);
+        
+        return _trHeader;
     }
 
     public boolean insertUser(User _user) {
@@ -214,6 +237,20 @@ public class Adapter {
         return true;
     }
     
+    // new by Sun
+    public boolean updateTransactionStatus(TransactionHeader _trHeader) {
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try {
+            sess.update(_trHeader);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        }
+        return true;
+    }
+    
     //create new 18:11PM 7 Jun
     public List getCartList(int _userId){
         String query = "SELECT a.* "
@@ -239,7 +276,7 @@ public class Adapter {
         }
         return true;
     }
-    
+
     public List getCartId(int _userId, int _productId) {
         String query = "SELECT * "
                 + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;

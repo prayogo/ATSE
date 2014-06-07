@@ -98,8 +98,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="414" y="0" width="138" height="20"/>
+			<staticText>
+				<reportElement mode="Opaque" x="419" y="0" width="28" height="19"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement x="442" y="0" width="110" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
