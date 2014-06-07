@@ -52,6 +52,10 @@
         <servlet-name>GetProductReport</servlet-name>
         <servlet-class>servlet.GetProductReport</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoUpdateStatus</servlet-name>
+        <servlet-class>servlet.DoUpdateStatus</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>GetProductReport</servlet-name>
         <url-pattern>/GetProductReport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoUpdateStatus</servlet-name>
+        <url-pattern>/DoUpdateStatus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
