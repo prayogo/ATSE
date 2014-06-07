@@ -13,11 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class DoUpdateProduct extends HttpServlet {
+public class DoInsertProduct extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         HttpSession session = request.getSession();
         
         if(session.getAttribute("loginUser") == null){
@@ -55,25 +54,23 @@ public class DoUpdateProduct extends HttpServlet {
         }
         
         if(!_errMsg.toString().equals("0000")){
-            response.sendRedirect("manage-product.jsp?id=" + _productId + "&errMsg=" + _errMsg.toString());
+            response.sendRedirect("manage-product.jsp?errMsg=" + _errMsg.toString());
         }
         else{                       
             Adapter _adap = new Adapter();
             
             Product _product = new Product();
             
-            _product = (Product)_adap.getProduct(_productId).get(0);
-            
             _product.setName(_productName);
             _product.setDescription(_productDesc);
             _product.setPrice(Integer.parseInt(_productPrice));
             _product.setImage(_productImage);
             
-            if(_adap.updateProduct(_product)){
+            if(_adap.insertProduct(_product)){
                 response.sendRedirect("product.jsp");
             }
             else{
-                response.sendRedirect("manage-product.jsp?id=" + _productId + "&errMsg=2");
+                response.sendRedirect("manage-product.jsp?errMsg=2");
             }
         }
     }

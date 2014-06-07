@@ -55,7 +55,7 @@
         <label style="padding-top:6px;" class="nav-menu-red"><%=_totalProduct%> product listed</label>
       </div>
       <div style="float:right; margin-top:-10px">
-        <button class="button-red"><span class="glyphicon glyphicon-eye-open"></span> View Product Report</button>
+        <a class="button-red" href="./GetProductReport"><span class="glyphicon glyphicon-eye-open"></span> View Product Report</a>
         <a href="manage-product.jsp" class="button-red"><span class="glyphicon glyphicon-plus"></span> Add Product</a> </div>
     </div>
     <div style="padding:20px">
@@ -70,7 +70,7 @@
               <p style="height:45px;overflow:hidden;font-size:11px; margin-top:4px;margin-bottom:4px;"><%= _product.getDescription() %></p>
               <p style="text-align:center; height:35px; margin:0"> 
               <a href="manage-product.jsp?id=<%= _product.getProductid() %>" class="button-red button-sm" style="width:auto"><span class="glyphicon glyphicon-pencil" style="width:auto; text-align:left;"></span> Update</a> 
-              <a class="button-red button-sm" style="width:auto"><span class="glyphicon glyphicon-trash" style="width:auto; text-align:left;"></span> Delete</a> </p>
+              <a class="button-red button-sm" style="width:auto" href="./DoDeleteProduct?id=<%=_product.getProductid()%>"><span class="glyphicon glyphicon-trash" style="width:auto; text-align:left;"></span> Delete</a> </p>
             </div>
           </div>
         </div>

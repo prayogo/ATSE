@@ -160,7 +160,49 @@ public class Adapter {
 
         return true;
     }
-
+    
+    // new by Sun
+    public boolean insertProduct (Product _product){
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try {
+            sess.save(_product);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        }
+        return true;
+    }
+    
+    // new by Sun
+    public boolean updateProduct(Product _product) {
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try {
+            sess.update(_product);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        }
+        return true;
+    }
+    
+    // new by Sun
+    public boolean deleteProduct(Product _product) {
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try {
+            sess.delete(_product);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        }
+        return true;
+    }
+    
     public List getCartId(int _userId, int _productId) {
         String query = "SELECT * "
                 + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;
