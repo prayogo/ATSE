@@ -36,6 +36,22 @@
         <servlet-name>DoUpdateProduct</servlet-name>
         <servlet-class>servlet.DoUpdateProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoSearchUser</servlet-name>
+        <servlet-class>servlet.DoSearchUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoDeleteProduct</servlet-name>
+        <servlet-class>servlet.DoDeleteProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoInsertProduct</servlet-name>
+        <servlet-class>servlet.DoInsertProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetProductReport</servlet-name>
+        <servlet-class>servlet.GetProductReport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -71,6 +87,22 @@
     <servlet-mapping>
         <servlet-name>DoUpdateProduct</servlet-name>
         <url-pattern>/DoUpdateProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoSearchUser</servlet-name>
+        <url-pattern>/DoSearchUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoDeleteProduct</servlet-name>
+        <url-pattern>/DoDeleteProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoInsertProduct</servlet-name>
+        <url-pattern>/DoInsertProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetProductReport</servlet-name>
+        <url-pattern>/GetProductReport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -26,8 +26,8 @@
         String _userSearch = "";
         List _listUser;
         
-        if(session.getAttribute("userSearch") != null){
-            _userSearch = session.getAttribute("userSearch").toString();
+        if(request.getParameter("userSearch") != null){
+            _userSearch = request.getParameter("userSearch").toString();
         }
         
         _listUser = _adap.getListUser(_userSearch);
@@ -36,9 +36,9 @@
   <h1 class="page-header nav-menu-red" style="font-size:20px; text-align:center">Customer List</h1>
   <div style="padding:20px">
     <div style="margin-bottom:20px;">
-      <form>
+      <form action="DoSearchUser" method="POST">
         <div style="display:inline-block">
-          <input type="text" class="control" placeholder="Find User" style="width:200px" name="">
+          <input type="text" class="control" placeholder="Find User" style="width:200px" name="userSearch">
         </div>
         <button type="submit" class="button-red" style="margin:0; margin-bottom:2px"><span class="glyphicon glyphicon-search"></span> Search</button>
         <label style="font-style:italic; color:#999999">About <%=_listUser.size()%> result(s)</label>
