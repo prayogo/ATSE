@@ -281,6 +281,32 @@ public class Adapter {
         return true;
     }
 
+    public boolean confirmCart(TransactionHeader _header, List _details, List _carts) {
+        transaction = sess.beginTransaction();
+        transaction.begin();
+        try {
+            sess.save(_header);
+            TransactionDetail _detail;
+            Cart _cart;
+
+            for (int i = 0; i < _details.size(); i++) {
+                _detail = (TransactionDetail) _details.get(i);
+                _detail.setHeader(_header);
+                sess.save(_detail);
+            }
+            
+            for (int i = 0; i < _carts.size(); i++) {
+                _cart = (Cart) _carts.get(i);
+                sess.delete(_cart);
+            }
+            transaction.commit();
+        } catch (HibernateException ex) {
+            transaction.rollback();
+            return false;
+        }
+        return true;
+    }
+
     public List getCartId(int _userId, int _productId) {
         String query = "SELECT * "
                 + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;

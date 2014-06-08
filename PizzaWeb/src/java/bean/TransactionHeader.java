@@ -7,55 +7,42 @@ package bean;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  *
  * @author Prayogo
  */
 public class TransactionHeader {
+
     private int transactionheaderid;
-    private int userid;
     private String orderdate;
-    private int statusid;
     private User user;
     private Status status;
-    
     private Set<TransactionDetail> details = new HashSet();
-       
 
     public TransactionHeader() {
     }
 
-    public TransactionHeader(int transactionheaderid, int userid, String orderdate, int statusid) {
+    public TransactionHeader(int transactionheaderid, String orderdate) {
         this.transactionheaderid = transactionheaderid;
-        this.userid = userid;
         this.orderdate = orderdate;
-        this.statusid = statusid;
     }
 
-    public TransactionHeader(int transactionheaderid, int userid, String orderdate, int statusid, User user, Status status) {
+    public TransactionHeader(int transactionheaderid, String orderdate, User user, Status status) {
         this.transactionheaderid = transactionheaderid;
-        this.userid = userid;
         this.orderdate = orderdate;
-        this.statusid = statusid;
         this.user = user;
         this.status = status;
     }
-    
+
     public int getTransactionheaderid() {
         return transactionheaderid;
     }
 
-    public int getUserid() {
-        return userid;
-    }
-
     public String getOrderdate() {
         return orderdate;
-    }
-
-    public int getStatusid() {
-        return statusid;
     }
 
     public User getUser() {
@@ -69,21 +56,13 @@ public class TransactionHeader {
     public Set<TransactionDetail> getDetails() {
         return details;
     }
- 
+
     public void setTransactionheaderid(int transactionheaderid) {
         this.transactionheaderid = transactionheaderid;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
-
     public void setOrderdate(String orderdate) {
         this.orderdate = orderdate;
-    }
-
-    public void setStatusid(int statusid) {
-        this.statusid = statusid;
     }
 
     public void setUser(User user) {

@@ -34,7 +34,9 @@
     <property column="status" name="status" type="string"/>
   </class>
   <class name="bean.TransactionHeader" table="trtransactionheader">
-    <id column="transactionheaderid" name="transactionheaderid" type="integer"/>
+    <id column="transactionheaderid" name="transactionheaderid" type="integer">
+        <generator class="increment"></generator>
+    </id>
     <many-to-one class="bean.User" fetch="select" name="user">
       <column name="userid" not-null="true"/>
     </many-to-one>
@@ -42,7 +44,7 @@
       <column name="statusid" not-null="true"/>
     </many-to-one>
     <property column="orderdate" name="orderdate" type="string"/>
-    <set cascade="all" name="details">
+    <set cascade="all" name="details" inverse="true">
       <key>
         <column name="transactionheaderid" not-null="true"/>
       </key>
@@ -50,7 +52,9 @@
     </set>
   </class>
   <class name="bean.TransactionDetail" table="trtransactiondetail">
-    <id column="transactiondetailid" name="transactiondetailid" type="integer"/>
+    <id column="transactiondetailid" name="transactiondetailid" type="integer">
+        <generator class="increment"></generator>
+    </id>
     <many-to-one class="bean.TransactionHeader" name="header">
       <column name="transactionheaderid" not-null="true"/>
     </many-to-one>

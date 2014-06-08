@@ -12,8 +12,6 @@ import java.io.Serializable;
  */
 public class TransactionDetail implements Serializable{
     private int transactiondetailid;
-    private int transactionheaderid;
-    private int productid;
     private int price;
     private int qty;
     private TransactionHeader header;
@@ -22,18 +20,14 @@ public class TransactionDetail implements Serializable{
     public TransactionDetail() {
     }
 
-    public TransactionDetail(int transactiondetailid, int transactionheaderid, int productid, int price, int qty) {
+    public TransactionDetail(int transactiondetailid, int price, int qty) {
         this.transactiondetailid = transactiondetailid;
-        this.transactionheaderid = transactionheaderid;
-        this.productid = productid;
         this.price = price;
         this.qty = qty;
     }
 
-    public TransactionDetail(int transactiondetailid, int transactionheaderid, int productid, int price, int qty, TransactionHeader header, Product product) {
+    public TransactionDetail(int transactiondetailid, int price, int qty, TransactionHeader header, Product product) {
         this.transactiondetailid = transactiondetailid;
-        this.transactionheaderid = transactionheaderid;
-        this.productid = productid;
         this.price = price;
         this.qty = qty;
         this.header = header;
@@ -43,14 +37,6 @@ public class TransactionDetail implements Serializable{
     
     public int getTransactiondetailid() {
         return transactiondetailid;
-    }
-
-    public int getTransactionheaderid() {
-        return transactionheaderid;
-    }
-
-    public int getProductid() {
-        return productid;
     }
 
     public int getPrice() {
@@ -71,14 +57,6 @@ public class TransactionDetail implements Serializable{
 
     public void setTransactiondetailid(int transactiondetailid) {
         this.transactiondetailid = transactiondetailid;
-    }
-
-    public void setTransactionheaderid(int transactionheaderid) {
-        this.transactionheaderid = transactionheaderid;
-    }
-
-    public void setProductid(int productid) {
-        this.productid = productid;
     }
 
     public void setPrice(int price) {
