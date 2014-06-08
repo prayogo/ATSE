@@ -44,7 +44,7 @@
       <column name="statusid" not-null="true"/>
     </many-to-one>
     <property column="orderdate" name="orderdate" type="string"/>
-    <set cascade="all" name="details" inverse="true">
+    <set cascade="all" name="details" inverse="true" order-by="transactiondetailid">
       <key>
         <column name="transactionheaderid" not-null="true"/>
       </key>

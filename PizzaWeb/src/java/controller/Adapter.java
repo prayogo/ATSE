@@ -306,17 +306,18 @@ public class Adapter {
         }
         return true;
     }
+    
+    public List getTransactionHeader(int _userId){
+        String query = "SELECT * "
+                + "FROM trtransactionheader WHERE userid = " + _userId + " order by orderdate desc";
+        list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
+        return list;
+    }
 
     public List getCartId(int _userId, int _productId) {
         String query = "SELECT * "
                 + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;
         list = sess.createSQLQuery(query).addEntity(Cart.class).list();
         return list;
-    }
-
-    protected void finalize() {
-        if (sess.isOpen()) {
-            sess.close();
-        }
     }
 }

@@ -69,6 +69,7 @@ public class DoConfirmCart extends HttpServlet {
                 _detail.setHeader(_header);
                 _product = new Product();
                 _product.setProductid(((Cart) _listCart.get(i)).getProduct().getProductid());
+                _product.setPrice(((Cart) _listCart.get(i)).getProduct().getPrice());
                 _detail.setPrice(_product.getPrice());
                 _detail.setProduct(_product);
                 _detail.setQty(((Cart) _listCart.get(i)).getQty());
@@ -76,7 +77,7 @@ public class DoConfirmCart extends HttpServlet {
             }
             _adap = new Adapter();
             if (_adap.confirmCart(_header, _listDetail, _listCart)) {
-                _msg = "Order confirmed. Go to track page to see your order";
+                _msg = "Thank you for your order. You can click Track to view the order";
                 session.setAttribute("errCartMsg", _msg);
                 session.setAttribute("errCartType", "success");
                 response.sendRedirect("cart.jsp");
