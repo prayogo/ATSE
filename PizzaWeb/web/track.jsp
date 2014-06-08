@@ -1,3 +1,4 @@
+<%@page import="controller.HibernateUtil"%>
 <%@page import="bean.TransactionDetail"%>
 <%@page import="bean.TransactionHeader"%>
 <%@page import="controller.Adapter"%>

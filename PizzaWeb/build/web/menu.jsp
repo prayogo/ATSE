@@ -57,6 +57,7 @@
               <select class="select" style="width: 100%" id="cmbPrice" name="cmbPrice">
               <option value="0">All Prices</option>
               <%
+                _adap = new Adapter();
                 _list = _adap.getPriceRange();
                 PriceRange _range = new PriceRange();
                 for(int i = 0 ; i < _list.size() ; i++){

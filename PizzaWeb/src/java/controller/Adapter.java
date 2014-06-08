@@ -5,8 +5,10 @@
 package controller;
 
 import bean.*;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -31,12 +33,15 @@ public class Adapter {
                 + "' or email = '" + _user + "') and password = '" + _pass + "'").addEntity(User.class).list();
         if (list.size() > 0) {
             _userClass = (User) list.get(0);
+            Hibernate.initialize(_userClass.getRole());
         }
+        sess.close();
         return _userClass;
     }
 
     public List getPriceRange() {
         list = sess.createSQLQuery("SELECT * FROM ltpricerange").addEntity(PriceRange.class).list();
+        sess.close();
         return list;
     }
 
@@ -47,6 +52,7 @@ public class Adapter {
                 + "WHERE (a.name like '%" + _text + "%' or a.description like '%" + _text + "%') and "
                 + "b.pricerangeid = (case when " + _price + " = 0 then b.pricerangeid else " + _price + " end)";
         list = sess.createSQLQuery(query).addEntity(Product.class).list();
+        sess.close();
         return list;
     }
 
@@ -54,6 +60,7 @@ public class Adapter {
         String query = "SELECT a.* "
                 + "FROM msproduct a ORDER BY a.name";
         list = sess.createSQLQuery(query).addEntity(Product.class).list();
+        sess.close();
         return list;
     }
 
@@ -61,13 +68,17 @@ public class Adapter {
         String query = "SELECT a.* "
                 + "FROM msproduct a WHERE a.productid = " + _productId;
         list = sess.createSQLQuery(query).addEntity(Product.class).list();
+        sess.close();
         return list;
     }
 
     public List getListUser(String _user) {
         String query = "Select * from msuser where username like '%" + _user + "%'";
         list = sess.createSQLQuery(query).addEntity(User.class).list();
-
+        for (User _userClass : (List<User>) list) {
+            Hibernate.initialize(_userClass.getRole());
+        }
+        sess.close();
         return list;
     }
 
@@ -80,7 +91,7 @@ public class Adapter {
         if (!list.isEmpty()) {
             _product = (Product) list.get(0);
         }
-
+        sess.close();
         return _product;
     }
 
@@ -92,7 +103,6 @@ public class Adapter {
                 + "join ltstatus d on a.statusid = d.statusid "
                 + "join msproduct e on b.productid = e.productid ";
         list = sess.createSQLQuery(query).addEntity(TransactionReport.class).list();
-
         return list;
     }
 
@@ -105,15 +115,16 @@ public class Adapter {
 
         if (!list.isEmpty()) {
             _user = (User) list.get(0);
+            Hibernate.initialize(_user.getRole());
         }
-
+        sess.close();
         return _user;
     }
 
     public List getListRole() {
         String query = "select * from ltrole";
         list = sess.createSQLQuery(query).addEntity(Role.class).list();
-
+        sess.close();
         return list;
     }
     //new by Sun
@@ -121,7 +132,7 @@ public class Adapter {
     public List getListStatus() {
         String query = "select * From ltstatus";
         list = sess.createSQLQuery(query).addEntity(Status.class).list();
-
+        sess.close();
         return list;
     }
     //new by Sun
@@ -129,7 +140,12 @@ public class Adapter {
     public List getListTransaction() {
         String query = "select * from trTransactionHeader order by orderdate desc";
         list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
-
+        for (TransactionHeader _header : (List<TransactionHeader>) list) {
+            Hibernate.initialize(_header.getUser());
+            Hibernate.initialize(_header.getDetails());
+            Hibernate.initialize(_header.getStatus());
+        }
+        sess.close();
         return list;
     }
     //new by Sun
@@ -141,8 +157,11 @@ public class Adapter {
         TransactionHeader _trHeader = new TransactionHeader();
         if (!list.isEmpty()) {
             _trHeader = (TransactionHeader) list.get(0);
+            Hibernate.initialize(_trHeader.getUser());
+            Hibernate.initialize(_trHeader.getDetails());
+            Hibernate.initialize(_trHeader.getStatus());
         }
-
+        sess.close();
         return _trHeader;
     }
 
@@ -154,8 +173,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -167,8 +188,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -180,8 +203,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -193,9 +218,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
-
+        sess.close();
         return true;
     }
 
@@ -208,8 +234,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -222,8 +250,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -236,8 +266,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -250,8 +282,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -260,6 +294,11 @@ public class Adapter {
         String query = "SELECT a.* "
                 + "FROM trcart a join msproduct b on a.productid = b.productid WHERE a.userid = " + _userId + " order by b.name";
         list = sess.createSQLQuery(query).addEntity(Cart.class).list();
+        for(Cart _cart:(List<Cart>)list){
+            Hibernate.initialize(_cart.getProduct());
+            Hibernate.initialize(_cart.getUser());
+        }
+        sess.close();
         return list;
     }
 
@@ -276,8 +315,10 @@ public class Adapter {
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
 
@@ -294,7 +335,7 @@ public class Adapter {
                 _detail.setHeader(_header);
                 sess.save(_detail);
             }
-            
+
             for (int i = 0; i < _carts.size(); i++) {
                 _cart = (Cart) _carts.get(i);
                 sess.delete(_cart);
@@ -302,15 +343,23 @@ public class Adapter {
             transaction.commit();
         } catch (HibernateException ex) {
             transaction.rollback();
+            sess.close();
             return false;
         }
+        sess.close();
         return true;
     }
-    
-    public List getTransactionHeader(int _userId){
+
+    public List getTransactionHeader(int _userId) {
         String query = "SELECT * "
                 + "FROM trtransactionheader WHERE userid = " + _userId + " order by orderdate desc";
         list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
+        for (TransactionHeader _header : (List<TransactionHeader>) list) {
+            Hibernate.initialize(_header.getUser());
+            Hibernate.initialize(_header.getDetails());
+            Hibernate.initialize(_header.getStatus());
+        }
+        sess.close();
         return list;
     }
 
@@ -318,6 +367,10 @@ public class Adapter {
         String query = "SELECT * "
                 + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;
         list = sess.createSQLQuery(query).addEntity(Cart.class).list();
+        for(Cart _cart:(List<Cart>)list){
+            Hibernate.initialize(_cart.getProduct());
+            Hibernate.initialize(_cart.getUser());
+        }
         return list;
     }
 }

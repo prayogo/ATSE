@@ -37,10 +37,10 @@
     <id column="transactionheaderid" name="transactionheaderid" type="integer">
         <generator class="increment"></generator>
     </id>
-    <many-to-one class="bean.User" fetch="select" name="user">
+    <many-to-one class="bean.User" fetch="join" name="user">
       <column name="userid" not-null="true"/>
     </many-to-one>
-    <many-to-one class="bean.Status" fetch="select" name="status">
+    <many-to-one class="bean.Status" fetch="join" name="status">
       <column name="statusid" not-null="true"/>
     </many-to-one>
     <property column="orderdate" name="orderdate" type="string"/>
@@ -55,10 +55,10 @@
     <id column="transactiondetailid" name="transactiondetailid" type="integer">
         <generator class="increment"></generator>
     </id>
-    <many-to-one class="bean.TransactionHeader" name="header">
+    <many-to-one class="bean.TransactionHeader" name="header" fetch="join">
       <column name="transactionheaderid" not-null="true"/>
     </many-to-one>
-    <many-to-one class="bean.Product" name="product">
+    <many-to-one class="bean.Product" name="product" fetch="join">
       <column name="productid" not-null="true"/>
     </many-to-one>
     <property column="price" name="price" type="integer"/>
