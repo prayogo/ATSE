@@ -68,6 +68,10 @@
         <servlet-name>DoConfirmCart</servlet-name>
         <servlet-class>servlet.DoConfirmCart</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoCancelTransaction</servlet-name>
+        <servlet-class>servlet.DoCancelTransaction</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>DoConfirmCart</servlet-name>
         <url-pattern>/DoConfirmCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoCancelTransaction</servlet-name>
+        <url-pattern>/DoCancelTransaction</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -108,7 +108,7 @@ public class Adapter {
 
     public User getUser(String column, String value) {
 
-        User _user = new User();
+        User _user = null;
 
         String query = "select * from msuser where " + column + " ='" + value + "'";
         list = sess.createSQLQuery(query).addEntity(User.class).list();
@@ -154,7 +154,7 @@ public class Adapter {
         String query = "select * from trTransactionHeader where transactionheaderid =" + _trHeaderId;
         list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
 
-        TransactionHeader _trHeader = new TransactionHeader();
+        TransactionHeader _trHeader = null;
         if (!list.isEmpty()) {
             _trHeader = (TransactionHeader) list.get(0);
             Hibernate.initialize(_trHeader.getUser());
@@ -294,7 +294,7 @@ public class Adapter {
         String query = "SELECT a.* "
                 + "FROM trcart a join msproduct b on a.productid = b.productid WHERE a.userid = " + _userId + " order by b.name";
         list = sess.createSQLQuery(query).addEntity(Cart.class).list();
-        for(Cart _cart:(List<Cart>)list){
+        for (Cart _cart : (List<Cart>) list) {
             Hibernate.initialize(_cart.getProduct());
             Hibernate.initialize(_cart.getUser());
         }
@@ -350,9 +350,35 @@ public class Adapter {
         return true;
     }
 
+    public List getTransactionHeader() {
+        String query = "SELECT * "
+                + "FROM trtransactionheader order by orderdate desc";
+        list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
+        for (TransactionHeader _header : (List<TransactionHeader>) list) {
+            Hibernate.initialize(_header.getUser());
+            Hibernate.initialize(_header.getDetails());
+            Hibernate.initialize(_header.getStatus());
+        }
+        sess.close();
+        return list;
+    }
+
     public List getTransactionHeader(int _userId) {
         String query = "SELECT * "
-                + "FROM trtransactionheader WHERE userid = " + _userId + " order by orderdate desc";
+                + "FROM trtransactionheader WHERE userid = " + _userId + " order by orderdate asc";
+        list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
+        for (TransactionHeader _header : (List<TransactionHeader>) list) {
+            Hibernate.initialize(_header.getUser());
+            Hibernate.initialize(_header.getDetails());
+            Hibernate.initialize(_header.getStatus());
+        }
+        sess.close();
+        return list;
+    }
+
+    public List getTransactionHeader(int _userId, int _headerId) {
+        String query = "SELECT * "
+                + "FROM trtransactionheader WHERE userid = " + _userId + " and transactionheaderid = " + _headerId;
         list = sess.createSQLQuery(query).addEntity(TransactionHeader.class).list();
         for (TransactionHeader _header : (List<TransactionHeader>) list) {
             Hibernate.initialize(_header.getUser());
@@ -367,10 +393,11 @@ public class Adapter {
         String query = "SELECT * "
                 + "FROM trcart WHERE userid = " + _userId + " and productid = " + _productId;
         list = sess.createSQLQuery(query).addEntity(Cart.class).list();
-        for(Cart _cart:(List<Cart>)list){
+        for (Cart _cart : (List<Cart>) list) {
             Hibernate.initialize(_cart.getProduct());
             Hibernate.initialize(_cart.getUser());
         }
+        sess.close();
         return list;
     }
 }

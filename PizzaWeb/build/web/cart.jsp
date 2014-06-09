@@ -3,18 +3,28 @@
 <%
     if (session.getAttribute("loginUser") == null) {
         boolean remember = false;
+        String _user = "";
+        String _pass = "";
         Cookie[] cookies = request.getCookies();
-        for (int i = 0; i < cookies.length; i++) {
-            Cookie c = cookies[i];
-            if (c.getName().equals("USPizzaWeb") || c.getName().equals("PWPizzaWeb")) {
+        if (cookies != null) {
+            for (int i = 0; i < cookies.length; i++) {
+                Cookie c = cookies[i];
+                if (c.getName().equals("USPizzaWeb")) {
+                    _user = c.getValue();
+                } else if (c.getName().equals("PWPizzaWeb")) {
+                    _pass = c.getValue();
+                }
+            }
+            if (!_user.equals("") && !_pass.equals("")) {
                 remember = true;
                 session.setAttribute("gotoURL", "cart");
+                response.sendRedirect("DoLogin");
             }
         }
         if (!remember) {
             response.sendRedirect("pagenotfound.jsp");
         }
-    }
+    } else {
 %>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html>
@@ -122,10 +132,11 @@
     </body>
 </html>
 <%
-    if (session.getAttribute("errCartMsg") != null) {
-        session.removeAttribute("errCartMsg");
-    }
-    if (session.getAttribute("errCartType") != null) {
-        session.removeAttribute("errCartType");
+        if (session.getAttribute("errCartMsg") != null) {
+            session.removeAttribute("errCartMsg");
+        }
+        if (session.getAttribute("errCartType") != null) {
+            session.removeAttribute("errCartType");
+        }
     }
 %>

@@ -69,7 +69,8 @@
                                 if (_header.getStatus().getStatusid() == 1) {
                             %>
                             <div style="display:inline-block; float:right"> 
-                                <form method="POST">
+                                <form method="POST" action="DoCancelTransaction" onsubmit="return confirm('Are you sure want to cancel this order?');">
+                                    <input type="hidden" id="hdnTrHeader" name="hdnTrHeader" value="<%= _header.getTransactionheaderid()%>">
                                     <button type="submit" class="button-red button-sm" style="margin-top:0"><span class="glyphicon glyphicon-remove"></span> Cancel Order</button> 
                                 </form>
                             </div>
@@ -131,3 +132,11 @@
         </div>
     </body>
 </html>
+<%
+    if (session.getAttribute("errTrackMsg") != null) {
+        session.removeAttribute("errTrackMsg");
+    }
+    if (session.getAttribute("errTrackType") != null) {
+        session.removeAttribute("errTrackType");
+    }
+%>

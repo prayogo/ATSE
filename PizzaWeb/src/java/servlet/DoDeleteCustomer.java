@@ -1,4 +1,3 @@
-
 package servlet;
 
 import bean.User;
@@ -15,26 +14,39 @@ public class DoDeleteCustomer extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String _msg = "";
         HttpSession session = request.getSession();
-        
-        if(session.getAttribute("loginUser") == null){
-            response.sendRedirect("index.jsp");
-        }
-        
-        int roleid = ((User)session.getAttribute("loginUser")).getRole().getRoleid();
-        if(roleid != 1){
-            response.sendRedirect("index.jsp");            
-        } 
-        
-        String _userid = request.getParameter("userid");
-        
-        Adapter _adap = new Adapter();
-        User _userClass = new User();
-            
-        _userClass = _adap.getUser("userid", _userid);
-        
-        if(_adap.deleteUser(_userClass)){
+        try {
+            if (session.getAttribute("loginUser") == null) {
+                response.sendRedirect("pagenotfound.jsp");
+            } else {
+                int roleid = ((User) session.getAttribute("loginUser")).getRole().getRoleid();
+                if (roleid != 1) {
+                    response.sendRedirect("pagenotfound.jsp");
+                } else {
+                    String _userid = request.getParameter("hdnUID");
+                    Adapter _adap = new Adapter();
+                    User _userClass;
+                    _userClass = _adap.getUser("userid", _userid);
+                    _adap = new Adapter();
+                    if (_adap.deleteUser(_userClass)) {
+                        response.sendRedirect("customer.jsp");
+                        _msg = "Customer data deleted";
+                        session.setAttribute("errCustomerMsg", _msg);
+                        session.setAttribute("errCustomerType", "success");
+                        response.sendRedirect("customer.jsp");
+                    } else {
+                        _msg = "Sorry, an error occurred while processing your request";
+                        session.setAttribute("errCustomerMsg", _msg);
+                        session.setAttribute("errCustomerType", "fail");
+                        response.sendRedirect("customer.jsp");
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            _msg = "Sorry, an error occurred while processing your request";
+            session.setAttribute("errCustomerMsg", _msg);
+            session.setAttribute("errCustomerType", "fail");
             response.sendRedirect("customer.jsp");
         }
     }
@@ -52,7 +64,7 @@ public class DoDeleteCustomer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
     }
 
     /**

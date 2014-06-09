@@ -1,4 +1,3 @@
-
 package servlet;
 
 import bean.Product;
@@ -17,64 +16,88 @@ public class DoUpdateProduct extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
-        
-        if(session.getAttribute("loginUser") == null){
-            response.sendRedirect("index.jsp");
-            return;
-        }
-        int roleid = ((User)session.getAttribute("loginUser")).getRole().getRoleid();
-        if(roleid != 1){
-            response.sendRedirect("index.jsp");
-            return;
-        }   
-        
-        Function function = new Function();
-        
+        String _msg = "";
         String _productId = request.getParameter("productId");
         String _productName = request.getParameter("txtProductName");
         String _productDesc = request.getParameter("txtProductDescription");
         String _productPrice = request.getParameter("txtProductPrice");
         String _productImage = request.getParameter("productImage");
-        
-        StringBuilder _errMsg = new StringBuilder();
-        _errMsg.append("0000");
-        
-        if(_productName.equals("")){
-            _errMsg.setCharAt(0, '1');
-        }
-        if(_productDesc.length() < 8){
-            _errMsg.setCharAt(1, '1');
-        }
-        if(!function.isNumeric(_productPrice)){
-            _errMsg.setCharAt(2, '1');
-        }
-        if(_productImage.equals("")){
-            _errMsg.setCharAt(3, '1');
-        }
-        
-        if(!_errMsg.toString().equals("0000")){
-            response.sendRedirect("manage-product.jsp?id=" + _productId + "&errMsg=" + _errMsg.toString());
-        }
-        else{                       
-            Adapter _adap = new Adapter();
-            
-            Product _product = new Product();
-            
-            _product = (Product)_adap.getProduct(_productId).get(0);
-            
-            _product.setName(_productName);
-            _product.setDescription(_productDesc);
-            _product.setPrice(Integer.parseInt(_productPrice));
-            _product.setImage(_productImage);
-            
-            if(_adap.updateProduct(_product)){
-                response.sendRedirect("product.jsp");
+
+        try {
+            if (session.getAttribute("loginUser") == null) {
+                response.sendRedirect("pagenotfound.jsp");
+            } else {
+                int roleid = ((User) session.getAttribute("loginUser")).getRole().getRoleid();
+                if (roleid != 1) {
+                    response.sendRedirect("pagenotfound.jsp");
+                } else {
+                    Function function = new Function();
+
+                    if (_productName.equals("")) {
+                        _msg = "Name must be filled";
+                        session.setAttribute("errProductMsg", _msg);
+                        session.setAttribute("_productId", _productId);
+                        session.setAttribute("_productName", _productName);
+                        session.setAttribute("_productDesc", _productDesc);
+                        session.setAttribute("_productPrice", _productPrice);
+                        response.sendRedirect("manage-product.jsp");
+                    } else if (_productDesc.length() < 8) {
+                        _msg = "Description must be more than 8 characters";
+                        session.setAttribute("_productId", _productId);
+                        session.setAttribute("_productName", _productName);
+                        session.setAttribute("_productDesc", _productDesc);
+                        session.setAttribute("_productPrice", _productPrice);
+                        session.setAttribute("errProductMsg", _msg);
+                        response.sendRedirect("manage-product.jsp");
+                    } else if (!function.isNumeric(_productPrice)) {
+                        _msg = "Price must be numeric";
+                        session.setAttribute("errProductMsg", _msg);
+                        session.setAttribute("_productId", _productId);
+                        session.setAttribute("_productName", _productName);
+                        session.setAttribute("_productDesc", _productDesc);
+                        session.setAttribute("_productPrice", _productPrice);
+                        response.sendRedirect("manage-product.jsp");
+                    } else if (_productImage.equals("")) {
+                        _msg = "Image must be filled";
+                        session.setAttribute("errProductMsg", _msg);
+                        session.setAttribute("_productId", _productId);
+                        session.setAttribute("_productName", _productName);
+                        session.setAttribute("_productDesc", _productDesc);
+                        session.setAttribute("_productPrice", _productPrice);
+                        response.sendRedirect("manage-product.jsp");
+                    } else {
+                        Adapter _adap = new Adapter();
+                        Product _product = new Product();
+                        _product = (Product) _adap.getProduct(_productId).get(0);
+                        _product.setName(_productName);
+                        _product.setDescription(_productDesc);
+                        _product.setPrice(Integer.parseInt(_productPrice));
+                        _product.setImage(_productImage);
+                        _adap = new Adapter();
+                        if (_adap.updateProduct(_product)) {
+                            response.sendRedirect("product.jsp");
+                        } else {
+                            _msg = "Sorry, an error occurred while processing your request";
+                            session.setAttribute("_productId", _productId);
+                            session.setAttribute("_productName", _productName);
+                            session.setAttribute("_productDesc", _productDesc);
+                            session.setAttribute("_productPrice", _productPrice);
+                            session.setAttribute("errProductMsg", _msg);
+                            response.sendRedirect("manage-product.jsp");
+                        }
+                    }
+                }
             }
-            else{
-                response.sendRedirect("manage-product.jsp?id=" + _productId + "&errMsg=2");
-            }
+        } catch (Exception ex) {
+            _msg = "Sorry, an error occurred while processing your request";
+            session.setAttribute("_productId", _productId);
+            session.setAttribute("_productName", _productName);
+            session.setAttribute("_productDesc", _productDesc);
+            session.setAttribute("_productPrice", _productPrice);
+            session.setAttribute("errProductMsg", _msg);
+            response.sendRedirect("manage-product.jsp");
         }
     }
 
@@ -91,7 +114,7 @@ public class DoUpdateProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
     }
 
     /**

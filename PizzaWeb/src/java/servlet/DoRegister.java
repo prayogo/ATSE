@@ -10,13 +10,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 public class DoRegister extends HttpServlet {
-        
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String _user = request.getParameter("txtUsername");
         String _pass = request.getParameter("txtPassword");
         String _confPass = request.getParameter("txtConfirmPass");
@@ -24,58 +24,130 @@ public class DoRegister extends HttpServlet {
         String _address = request.getParameter("txtAddress");
         String _email = request.getParameter("txtEmail");
         String _phone = request.getParameter("txtPhone");
-                
-        Function function = new Function();
-        
-        StringBuilder _errMsg = new StringBuilder();
-        _errMsg.append("000000000");
-        
-        if(_user.equals("")){
-            _errMsg.setCharAt(0, '1');
-        }
-        if(_pass.length() < 6 && !function.isAlphaNumber(_pass)){
-            _errMsg.setCharAt(1, '1');
-        }
-        if(_confPass.equals("") || !_confPass.equals(_pass)){
-            _errMsg.setCharAt(2, '1');
-        }        
-        if(!function.isAlpha(_name)){
-            _errMsg.setCharAt(3, '1');
-        }
-        if(_address.length() < 8){
-            _errMsg.setCharAt(4, '1');
-        }
-        if(!function.emailFormat(_email)){
-            _errMsg.setCharAt(5, '1');
-        }
-        if(!function.isNumeric(_phone)){
-            _errMsg.setCharAt(6, '1');
-        }
-        
-        Adapter _adap = new Adapter();
-        
-        if(_adap.getUser("username", _user) != null)
-            _errMsg.setCharAt(7,'1');
-        if(_adap.getUser("email", _email) != null)
-            _errMsg.setCharAt(8,'1');
-        
-        if(!_errMsg.toString().equals("000000000")){
-            response.sendRedirect("register.jsp?errMsg=" + _errMsg.toString());
-        }
-        else{            
-            Role _roleClass = new Role();
-            _roleClass.setRoleid(2);
-            User _userClass = new User(_user, _pass, _name, _email, _phone, _address, _roleClass);
-            if(_adap.insertUser(_userClass)){
-                response.sendRedirect("index.jsp");
+
+        HttpSession session = request.getSession();
+        String _msg = "";
+
+        try {
+            Function function = new Function();
+            if (_user.equals("")) {
+                _msg = "Username must be filled";
+                session.setAttribute("errRegisterMsg", _msg);
+                session.setAttribute("_username", _user);
+                session.setAttribute("_name", _name);
+                session.setAttribute("_address", _address);
+                session.setAttribute("_email", _email);
+                session.setAttribute("_phone", _phone);
+                response.sendRedirect("register.jsp");
+            } else if (_pass.length() < 6 && !function.isAlphaNumber(_pass)) {
+                _msg = "Password must alphanumeric and more than 6 character";
+                session.setAttribute("errRegisterMsg", _msg);
+                session.setAttribute("_username", _user);
+                session.setAttribute("_name", _name);
+                session.setAttribute("_address", _address);
+                session.setAttribute("_email", _email);
+                session.setAttribute("_phone", _phone);
+                response.sendRedirect("register.jsp");
+            } else if (_confPass.equals("") || !_confPass.equals(_pass)) {
+                _msg = "Confirm password must same as password";
+                session.setAttribute("errRegisterMsg", _msg);
+                session.setAttribute("_username", _user);
+                session.setAttribute("_name", _name);
+                session.setAttribute("_address", _address);
+                session.setAttribute("_email", _email);
+                session.setAttribute("_phone", _phone);
+                response.sendRedirect("register.jsp");
+            } else if (!function.isAlpha(_name)) {
+                _msg = "Name must be alphabet";
+                session.setAttribute("errRegisterMsg", _msg);
+                session.setAttribute("_username", _user);
+                session.setAttribute("_name", _name);
+                session.setAttribute("_address", _address);
+                session.setAttribute("_email", _email);
+                session.setAttribute("_phone", _phone);
+                response.sendRedirect("register.jsp");
+            } else if (_address.length() < 8) {
+                _msg = "Address must be more than 8 character";
+                session.setAttribute("errRegisterMsg", _msg);
+                session.setAttribute("_username", _user);
+                session.setAttribute("_name", _name);
+                session.setAttribute("_address", _address);
+                session.setAttribute("_email", _email);
+                session.setAttribute("_phone", _phone);
+                response.sendRedirect("register.jsp");
+            } else if (!function.emailFormat(_email)) {
+                _msg = "Email must be in valid format. ex: grazzie@pizza.com";
+                session.setAttribute("errRegisterMsg", _msg);
+                session.setAttribute("_username", _user);
+                session.setAttribute("_name", _name);
+                session.setAttribute("_address", _address);
+                session.setAttribute("_email", _email);
+                session.setAttribute("_phone", _phone);
+                response.sendRedirect("register.jsp");
+            } else if (!function.isNumeric(_phone)) {
+                _msg = "Phone number must be numeric";
+                session.setAttribute("errRegisterMsg", _msg);
+                session.setAttribute("_username", _user);
+                session.setAttribute("_name", _name);
+                session.setAttribute("_address", _address);
+                session.setAttribute("_email", _email);
+                session.setAttribute("_phone", _phone);
+                response.sendRedirect("register.jsp");
+            } else {
+                Adapter _adap = new Adapter();
+                if (_adap.getUser("username", _user) != null) {
+                    _msg = "Username already exists";
+                    session.setAttribute("errRegisterMsg", _msg);
+                    session.setAttribute("_username", _user);
+                    session.setAttribute("_name", _name);
+                    session.setAttribute("_address", _address);
+                    session.setAttribute("_email", _email);
+                    session.setAttribute("_phone", _phone);
+                    response.sendRedirect("register.jsp");
+                } else {
+                    _adap = new Adapter();
+                    if (_adap.getUser("email", _email) != null) {
+                        _msg = "Email already exists";
+                        session.setAttribute("errRegisterMsg", _msg);
+                        session.setAttribute("_username", _user);
+                        session.setAttribute("_name", _name);
+                        session.setAttribute("_address", _address);
+                        session.setAttribute("_email", _email);
+                        session.setAttribute("_phone", _phone);
+                        response.sendRedirect("register.jsp");
+                    } else {
+                        Role _roleClass = new Role();
+                        _roleClass.setRoleid(2);
+                        User _userClass = new User(_user, _pass, _name, _email, _phone, _address, _roleClass);
+                        _adap = new Adapter();
+                        if (_adap.insertUser(_userClass)) {
+                            response.sendRedirect("index.jsp");
+                        } else {
+                            _msg = "Sorry, an error occurred while processing your request";
+                            session.setAttribute("errRegisterMsg", _msg);
+                            session.setAttribute("_username", _user);
+                            session.setAttribute("_name", _name);
+                            session.setAttribute("_address", _address);
+                            session.setAttribute("_email", _email);
+                            session.setAttribute("_phone", _phone);
+                            response.sendRedirect("register.jsp");
+                        }
+                    }
+                }
             }
-            else{
-                response.sendRedirect("register.jsp?errMsg=2");
-            }
+        } catch (Exception ex) {
+            _msg = "Sorry, an error occurred while processing your request";
+            session.setAttribute("errRegisterMsg", _msg);
+            session.setAttribute("_username", _user);
+            session.setAttribute("_name", _name);
+            session.setAttribute("_address", _address);
+            session.setAttribute("_email", _email);
+            session.setAttribute("_phone", _phone);
+            response.sendRedirect("register.jsp");
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.

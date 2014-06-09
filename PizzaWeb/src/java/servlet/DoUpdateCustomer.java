@@ -78,10 +78,11 @@ public class DoUpdateCustomer extends HttpServlet {
         }
         
         Adapter _adap = new Adapter();
-        
-        if(_adap.getUser("username", _user) != null && (_adap.getUser("username", _user)).getUserid() != Integer.parseInt(_userid))
+        User _userC = _adap.getUser("username", _user);
+        if(_userC != null && _userC.getUserid() != Integer.parseInt(_userid))
             _errMsg.setCharAt(7,'1');
-        if(_adap.getUser("email", _email) != null && (_adap.getUser("username", _user)).getUserid() != Integer.parseInt(_userid))
+        _adap = new Adapter();
+        if(_adap.getUser("email", _email) != null && _userC.getUserid() != Integer.parseInt(_userid))
             _errMsg.setCharAt(8,'1');
         
         if(!_errMsg.toString().equals("000000000")){
@@ -91,8 +92,8 @@ public class DoUpdateCustomer extends HttpServlet {
             Role _roleClass = new Role();
             _roleClass.setRoleid(_roleUser);
             
-            User _userClass = new User();
-            
+            User _userClass;
+            _adap = new Adapter();
             _userClass = _adap.getUser("userid", _userid);
             
             _userClass.setPassword(_pass);
@@ -102,6 +103,7 @@ public class DoUpdateCustomer extends HttpServlet {
             _userClass.setPhone(_phone);
             _userClass.setRole(_roleClass);
             
+            _adap = new Adapter();
             if(_adap.updateUser(_userClass)){
                 response.sendRedirect("customer.jsp");
             }

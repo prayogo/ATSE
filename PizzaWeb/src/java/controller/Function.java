@@ -30,7 +30,8 @@ public class Function {
             alpha = false;
         
         for(int i = 0; i < _input.length(); i++){
-            if(!Character.isAlphabetic(_input.charAt(i))){
+            int code = (int)_input.charAt(i);
+            if(!Character.isAlphabetic(_input.charAt(i)) && code != 32){
                 alpha = false;
                 break;
             }

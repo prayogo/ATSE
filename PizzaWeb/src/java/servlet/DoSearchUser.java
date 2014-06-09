@@ -7,14 +7,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class DoSearchUser extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
         String _userSearch = request.getParameter("userSearch");
-        response.sendRedirect("customer.jsp?userSearch="+ _userSearch);
+        session.setAttribute("searchUser", _userSearch);
+        response.sendRedirect("customer.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

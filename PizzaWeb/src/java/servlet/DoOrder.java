@@ -59,6 +59,7 @@ public class DoOrder extends HttpServlet {
             } else {
                 User _user = (User) session.getAttribute("loginUser");
                 Cart _cart = new Cart();
+                _adap = new Adapter();
                 List _cartList = _adap.getCartId(_user.getUserid(), Integer.parseInt(_productId));
                 int _cartIdInDB = 0;
                 int _qtyInDB = 0;
