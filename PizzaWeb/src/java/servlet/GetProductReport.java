@@ -1,6 +1,6 @@
-
 package servlet;
 
+import bean.User;
 import controller.Adapter;
 import java.io.File;
 import java.io.IOException;
@@ -15,42 +15,57 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 
 public class GetProductReport extends HttpServlet {
 
-   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-       ServletOutputStream _servletOutputStream = response.getOutputStream();
-       
-       File _file = new File(getServletConfig().getServletContext().getRealPath("WEB-INF/ProductReport.jasper"));
-       
-       byte[] bytes = null;
-       Adapter _adap = new Adapter();
-       List _listProduct;
+        HttpSession session = request.getSession();
+        try {
+            if (session.getAttribute("loginUser") == null) {
+                response.sendRedirect("pagenotfound.jsp");
+            } else {
+                int roleid = ((User) session.getAttribute("loginUser")).getRole().getRoleid();
+                if (roleid != 1) {
+                    response.sendRedirect("pagenotfound.jsp");
+                } else {
+                    ServletOutputStream _servletOutputStream = response.getOutputStream();
+                    File _file = new File(getServletConfig().getServletContext().getRealPath("WEB-INF/ProductReport.jasper"));
 
-       _listProduct = _adap.getProduct();
-       
-       JRBeanArrayDataSource jr = new JRBeanArrayDataSource(_listProduct.toArray());               
-        
-       try{
-            bytes = JasperRunManager.runReportToPdf(_file.getPath(), new HashMap(), jr);
-       }
-       catch(JRException ex){
-           response.getWriter().print(ex.toString());
-       }      
-       response.setContentType("application/pdf");
-       response.setContentLength(bytes.length);
+                    byte[] bytes = null;
+                    Adapter _adap = new Adapter();
+                    List _listProduct;
 
-       _servletOutputStream.write(bytes, 0, bytes.length);
-       _servletOutputStream.flush();
-       _servletOutputStream.close();
+                    _listProduct = _adap.getProduct();
+                    JRBeanArrayDataSource jr = new JRBeanArrayDataSource(_listProduct.toArray());
+
+                    try {
+                        bytes = JasperRunManager.runReportToPdf(_file.getPath(), new HashMap(), jr);
+                    } catch (JRException ex) {
+                        response.getWriter().print(ex.toString());
+                    }
+                    response.setContentType("application/pdf");
+                    response.setContentLength(bytes.length);
+
+                    _servletOutputStream.write(bytes, 0, bytes.length);
+                    _servletOutputStream.flush();
+                    _servletOutputStream.close();
+                }
+            }
+        } catch (Exception ex) {
+            String _msg = "Sorry, an error occurred while processing your request";
+            session.setAttribute("errProductMsg", _msg);
+            session.setAttribute("errProductType", "fail");
+            response.sendRedirect("transaction.jsp");
+        }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP
      * <code>GET</code> method.

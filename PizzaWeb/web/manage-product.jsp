@@ -17,7 +17,7 @@
             }
             if (!_user.equals("") && !_pass.equals("")) {
                 remember = true;
-                session.setAttribute("gotoURL", "manage-product");
+                session.setAttribute("gotoURL", "product");
                 response.sendRedirect("DoLogin");
             }
         }

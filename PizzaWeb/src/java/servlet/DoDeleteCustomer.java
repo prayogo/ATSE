@@ -30,7 +30,6 @@ public class DoDeleteCustomer extends HttpServlet {
                     _userClass = _adap.getUser("userid", _userid);
                     _adap = new Adapter();
                     if (_adap.deleteUser(_userClass)) {
-                        response.sendRedirect("customer.jsp");
                         _msg = "Customer data deleted";
                         session.setAttribute("errCustomerMsg", _msg);
                         session.setAttribute("errCustomerType", "success");

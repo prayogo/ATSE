@@ -99,7 +99,7 @@
                             </div>
                             <div>
                                 <div style="display:inline-block; width:12%"> <b>Address</b> </div>
-                                <div style="display:inline; overflow:hidden !important; margin-right:20px"> <span style="width:32%; display:inline-block">Jakarta </span></div>
+                                <div style="display:inline; overflow:hidden !important; margin-right:20px"> <span style="width:32%; display:inline-block"><%=_user.getAddress()%></span></div>
                             </div>
                         </div>
                         <div style="margin-bottom:10px; text-align:center"> 

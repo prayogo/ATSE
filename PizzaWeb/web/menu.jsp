@@ -19,7 +19,7 @@
             }
             if (!_user.equals("") && !_pass.equals("")) {
                 remember = true;
-                session.setAttribute("gotoURL", "index");
+                session.setAttribute("gotoURL", "menu");
                 response.sendRedirect("DoLogin");
             }
         }

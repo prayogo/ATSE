@@ -15,7 +15,7 @@
             }
             if (!_user.equals("") && !_pass.equals("")) {
                 remember = true;
-                session.setAttribute("gotoURL", "index");
+                session.setAttribute("gotoURL", "register");
                 response.sendRedirect("DoLogin");
             }
         }
@@ -48,19 +48,19 @@
                         }
                         if (session.getAttribute("_name") != null) {
                             _name = session.getAttribute("_name").toString();
-                            session.removeAttribute("_username");
+                            session.removeAttribute("_name");
                         }
                         if (session.getAttribute("_address") != null) {
                             _address = session.getAttribute("_address").toString();
-                            session.removeAttribute("_username");
+                            session.removeAttribute("_address");
                         }
                         if (session.getAttribute("_email") != null) {
                             _email = session.getAttribute("_email").toString();
-                            session.removeAttribute("_username");
+                            session.removeAttribute("_email");
                         }
                         if (session.getAttribute("_phone") != null) {
                             _phone = session.getAttribute("_phone").toString();
-                            session.removeAttribute("_username");
+                            session.removeAttribute("_phone");
                         }
                         session.removeAttribute("errRegisterMsg");
                     }
