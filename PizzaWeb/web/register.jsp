@@ -1,3 +1,26 @@
+<%
+    if (session.getAttribute("loginUser") == null) {
+        boolean remember = false;
+        String _user = "";
+        String _pass = "";
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (int i = 0; i < cookies.length; i++) {
+                Cookie c = cookies[i];
+                if (c.getName().equals("USPizzaWeb")) {
+                    _user = c.getValue();
+                } else if (c.getName().equals("PWPizzaWeb")) {
+                    _pass = c.getValue();
+                }
+            }
+            if (!_user.equals("") && !_pass.equals("")) {
+                remember = true;
+                session.setAttribute("gotoURL", "index");
+                response.sendRedirect("DoLogin");
+            }
+        }
+    }
+%>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html>
 <html>
