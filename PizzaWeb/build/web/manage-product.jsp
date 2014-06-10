@@ -89,7 +89,7 @@
                     }
                 %>
                 <div style="padding:20px; padding-top:10px">
-                    <form action="<%=_action%>" method="POST">
+                    <form action="<%=_action%>" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="productId" value="<%=_idProduct%>">
                         <div style="margin-bottom:10px;">
                             <label for="txtProductName" class="nav-menu-red" style="display:inline-block; width:20%">Name</label>
@@ -116,11 +116,11 @@
                             <label for="txtProductPrice" class="nav-menu-red" style="display:inline-block; width:20%">Image</label>
                             <b class="nav-menu-red">:</b>
                             <div style="display:inline-block">
-                                <input type="file" id="fileImage" style="display:none">
+                                <input accept="image/jpeg" type="file" id="fileImage" name="fileImage" style="display:none">
                                 <div class="inputFile">
                                     <input type="button" value="Browse" class="button-red" id="btnFile" onClick="btnFileClick()"/>
-                                    <label id="lblFile" class="nav-menu-red-normal" ><%=_productImage%></label>
-                                    <input type="hidden" value="<%=_productImage%>" name="productImage" id="hdnProductImage"/>
+                                    <label id="lblFile" class="nav-menu-red-normal" ></label>
+                                    <input type="hidden" name="productImage" id="hdnProductImage"/>
                                 </div>
                             </div>
                         </div>

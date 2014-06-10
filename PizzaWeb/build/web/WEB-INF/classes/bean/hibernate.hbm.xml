@@ -23,7 +23,9 @@
         </many-to-one>
     </class>
     <class name="bean.Product" table="msproduct">
-        <id column="productid" name="productid" type="integer"/>
+        <id column="productid" name="productid" type="integer">
+            <generator class="increment"></generator>
+        </id>
         <property column="name" name="name" type="string"/>
         <property column="description" name="description" type="string"/>
         <property column="price" name="price" type="integer"/>

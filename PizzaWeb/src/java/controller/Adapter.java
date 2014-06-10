@@ -5,8 +5,13 @@
 package controller;
 
 import bean.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.Part;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
@@ -255,12 +260,35 @@ public class Adapter {
     }
 
     // new by Sun
-    public boolean insertProduct(Product _product) {
+    public boolean insertProduct(Product _product, Part _image) {
         transaction = sess.beginTransaction();
         transaction.begin();
         try {
+            String extension = "jpg";
+            int i = _image.getContentType().lastIndexOf('/');
+            if (i > 0) {
+                extension = _image.getContentType().substring(i + 1);
+            }
+            
+            sess.save(_product);
+            _product.setImage(_product.getProductid() + "." + extension);
             sess.save(_product);
             transaction.commit();
+
+            InputStream fileInputStream = (InputStream) _image.getInputStream();
+            byte[] bFile = new byte[(int) (_image.getSize())];
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+
+            String workingDir = this.getClass().getClassLoader().getResource("").getPath();
+            int index = workingDir.indexOf("WEB-INF/classes/");
+            workingDir = workingDir.substring(1, index) + "img/";
+
+            String pathName = workingDir + _product.getProductid() + "." + extension;
+            File imageFile = new File(pathName);
+            FileOutputStream out = new FileOutputStream(imageFile);
+            out.write(bFile);
+            out.close();
         } catch (Exception ex) {
             transaction.rollback();
             sess.close();
@@ -271,12 +299,33 @@ public class Adapter {
     }
 
     // new by Sun
-    public boolean updateProduct(Product _product) {
+    public boolean updateProduct(Product _product, Part _image) {
         transaction = sess.beginTransaction();
         transaction.begin();
         try {
+            String extension = "jpg";
+            int i = _image.getContentType().lastIndexOf('/');
+            if (i > 0) {
+                extension = _image.getContentType().substring(i + 1);
+            }
+            _product.setImage(_product.getProductid() + "." + extension);
             sess.update(_product);
             transaction.commit();
+
+            InputStream fileInputStream = (InputStream) _image.getInputStream();
+            byte[] bFile = new byte[(int) (_image.getSize())];
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+
+            String workingDir = this.getClass().getClassLoader().getResource("").getPath();
+            int index = workingDir.indexOf("WEB-INF/classes/");
+            workingDir = workingDir.substring(1, index) + "img/";
+
+            String pathName = workingDir + _product.getProductid() + "." + extension;
+            File imageFile = new File(pathName);
+            FileOutputStream out = new FileOutputStream(imageFile);
+            out.write(bFile);
+            out.close();
         } catch (Exception ex) {
             transaction.rollback();
             sess.close();

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2014 at 02:10 AM
+-- Generation Time: Jun 10, 2014 at 07:10 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -100,22 +100,22 @@ CREATE TABLE IF NOT EXISTS `msproduct` (
   `price` int(11) NOT NULL,
   `image` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`productid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 --
 -- Dumping data for table `msproduct`
 --
 
 INSERT INTO `msproduct` (`productid`, `name`, `description`, `price`, `image`) VALUES
-(1, 'Peace In The Middle East', 'Homemade hummus, vine ripe tomatoes, black olives, caramelized onions, feta, fresh basil, pepperoncini and mozzarella.', 221000, ''),
-(2, 'Mr. Pestato Head', 'Homemade pesto sauce, roasted potatoes, caramelized onions, feta, fresh basil, oregano and mozzarella.', 221000, ''),
-(3, 'Railroad Grade', 'Italian sausage, pepperoni, fresh mushrooms, red onions, tomato sauce, mozzarella and cheddar', 221000, ''),
-(4, 'Paia Pie', 'Hawaiian pineapple, Canadian bacon, Mandarin oranges, tomato sauce, mozzarella and cheddar.', 221000, ''),
-(5, 'Pandora''s Box', 'Spinach, artichoke hearts, sun-dried tomatoes, feta, garlic, fresh basil, oregano and mozzarella (tomato sauce upon request, no charge).', 221000, ''),
-(6, 'Drag It Through The Garden', 'Fresh mushrooms, green peppers, red onions, artichoke hearts, broccoli, vine ripe tomatoes, fresh basil, tomato sauce, mozzarella and cheddar.', 221000, ''),
-(7, 'Baja 1000', 'Grilled chicken, black beans and salsa, black olives, red onions, vine ripe tomatoes, jalapeños, fresh cilantro and cheddar', 221000, ''),
-(8, 'Ragin'' Rooster', 'Chicken marinated in a sweet BBQ sauce, red onions, fresh cilantro, cheddar and mozzarella.', 221000, ''),
-(9, 'The Boar''der', 'Shredded pork marinated in a sweet BBQ sauce, red onions, fresh cilantro, cheddar and mozzarella.', 80000, ''),
+(1, 'Peace In The Middle East', 'Homemade hummus, vine ripe tomatoes, black olives, caramelized onions, feta, fresh basil, pepperoncini and mozzarella.', 221000, '1.jpeg'),
+(2, 'Mr. Pestato Head', 'Homemade pesto sauce, roasted potatoes, caramelized onions, feta, fresh basil, oregano and mozzarella.', 221000, '2.jpeg'),
+(3, 'Railroad Grade', 'Italian sausage, pepperoni, fresh mushrooms, red onions, tomato sauce, mozzarella and cheddar', 221000, '3.jpeg'),
+(4, 'Paia Pie', 'Hawaiian pineapple, Canadian bacon, Mandarin oranges, tomato sauce, mozzarella and cheddar.', 221000, '4.jpeg'),
+(5, 'Pandora''s Box', 'Spinach, artichoke hearts, sun-dried tomatoes, feta, garlic, fresh basil, oregano and mozzarella (tomato sauce upon request, no charge).', 221000, '5.jpeg'),
+(6, 'Drag It Through The Garden', 'Fresh mushrooms, green peppers, red onions, artichoke hearts, broccoli, vine ripe tomatoes, fresh basil, tomato sauce, mozzarella and cheddar.', 221000, '6.jpeg'),
+(7, 'Baja 1000', 'Grilled chicken, black beans and salsa, black olives, red onions, vine ripe tomatoes, jalapeÃ±os, fresh cilantro and cheddar', 221000, '7.jpeg'),
+(8, 'Ragin'' Rooster', 'Chicken marinated in a sweet BBQ sauce, red onions, fresh cilantro, cheddar and mozzarella.', 221000, '8.jpeg'),
+(9, 'The Boar''der', 'Shredded pork marinated in a sweet BBQ sauce, red onions, fresh cilantro, cheddar and mozzarella.', 80000, '9.jpeg'),
 (10, 'Yard Sale', 'Italian sausage, pepperoni, salami, black olives, fresh mushrooms, green peppers, red onions, vine ripe tomatoes, tomato sauce, mozzarella and cheddar.', 221000, ''),
 (11, 'Holy Cow', 'Swiss, fontina, gorgonzola, mozzarella, roasted walnuts and fresh sage (tomato sauce upon request, no charge)', 80000, ''),
 (12, 'The Spice Route', 'Chicken marinated in spicy Tandoori sauce, green pepper, red onion, cilantro and mozzarella', 221000, ''),
@@ -128,8 +128,8 @@ INSERT INTO `msproduct` (`productid`, `name`, `description`, `price`, `image`) V
 (19, 'Kickin Chicken', 'Chicken marinated in a spicy ginger peanut sauce, peanuts, green onions, Swiss, fontina, fresh cilantro and mozzarella.', 80000, ''),
 (20, 'Mont Blanc', 'Our zesty Alfredo sauce, crispy bacon, green onions, sliced tomatoes, parmesan cheese and mozzarella', 80000, ''),
 (21, 'Poultry Geist', 'Chicken marinated in a tangy ranch sauce, broccoli, red onions, Swiss, fontina, gorgonzola, mozzarella and fresh sage', 80000, ''),
-(23, 'Wham Bam Thank You Mammoth', 'Italian sausage, roasted red peppers, caramelized onions, parmesan, tomato sauce and mozzarella.', 80000, ''),
-(24, 'Wingin'' It', 'Chicken marinated in a buffalo wing sauce, gorgonzola, mozzarella and celery.', 80000, '');
+(23, 'Wham Bam Thank You Mammoth', 'Italian sausage, roasted red peppers, caramelized onions, parmesan, tomato sauce and mozzarella.', 80000, '23.jpeg'),
+(24, 'Wingin'' It', 'Chicken marinated in a buffalo wing sauce, gorgonzola, mozzarella and celery.', 80000, '24.jpeg');
 
 -- --------------------------------------------------------
 
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `msuser` (
 INSERT INTO `msuser` (`userid`, `username`, `password`, `name`, `email`, `phone`, `address`, `roleid`) VALUES
 (1, 'admin', 'admin', 'Administrator', 'admin@admin.com', '0123456789', 'Alamat No. 99', 1),
 (2, 'Member', 'user12345', 'Member', 'member1@pizza.com', '1234567890', 'Jl. Binus no. 99 user12345', 2),
-(3, 'testing', 'user12345', 'Testing Member', 'testing@pizza.com', '1234567890', 'sfsfsdfsdfsdf', 2);
+(3, 'testing123', 'user12345', 'Testing Member', 'testing@pizza.com', '1234567890', 'jl syahdan no 8888', 2);
 
 -- --------------------------------------------------------
 
@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `trtransactiondetail` (
   PRIMARY KEY (`transactiondetailid`),
   KEY `FK6E77C9F1B20232DB` (`productid`),
   KEY `FK6E77C9F1B0178173` (`transactionheaderid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `trtransactiondetail`
@@ -225,7 +225,14 @@ INSERT INTO `trtransactiondetail` (`transactiondetailid`, `transactionheaderid`,
 (9, 2, 14, 221000, 1),
 (10, 2, 12, 221000, 1),
 (11, 3, 16, 80000, 2),
-(12, 3, 13, 221000, 1);
+(12, 3, 13, 221000, 1),
+(13, 4, 7, 221000, 2),
+(14, 4, 6, 221000, 1),
+(15, 4, 4, 221000, 2),
+(16, 4, 21, 80000, 1),
+(17, 5, 13, 221000, 1),
+(18, 5, 18, 80000, 2),
+(19, 5, 2, 221000, 1);
 
 -- --------------------------------------------------------
 
@@ -241,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `trtransactionheader` (
   PRIMARY KEY (`transactionheaderid`),
   KEY `FK7542942D9560709D` (`statusid`),
   KEY `FK7542942D55D6858F` (`userid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `trtransactionheader`
@@ -250,7 +257,9 @@ CREATE TABLE IF NOT EXISTS `trtransactionheader` (
 INSERT INTO `trtransactionheader` (`transactionheaderid`, `userid`, `orderdate`, `statusid`) VALUES
 (1, 1, '2014-06-08 17:09:44', 5),
 (2, 1, '2014-06-08 17:11:30', 1),
-(3, 2, '2014-06-09 02:12:38', 2);
+(3, 2, '2014-06-09 02:12:38', 1),
+(4, 3, '2014-06-10 11:44:52', 2),
+(5, 3, '2014-06-10 11:45:56', 5);
 
 --
 -- Constraints for dumped tables

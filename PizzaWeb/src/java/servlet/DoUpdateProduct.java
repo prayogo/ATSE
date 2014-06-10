@@ -7,12 +7,24 @@ import controller.Function;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.*;
 
+@MultipartConfig()
 public class DoUpdateProduct extends HttpServlet {
+
+    private Part fileImage(HttpServletRequest request) {
+        try {
+            Part filePart = request.getPart("fileImage");
+            return filePart;
+        } catch (IllegalStateException ex) {
+            return null;
+        } catch (ServletException ex) {
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,6 +36,7 @@ public class DoUpdateProduct extends HttpServlet {
         String _productDesc = request.getParameter("txtProductDescription");
         String _productPrice = request.getParameter("txtProductPrice");
         String _productImage = request.getParameter("productImage");
+        Part _image = fileImage(request);
 
         try {
             if (session.getAttribute("loginUser") == null) {
@@ -76,7 +89,7 @@ public class DoUpdateProduct extends HttpServlet {
                         _product.setPrice(Integer.parseInt(_productPrice));
                         _product.setImage(_productImage);
                         _adap = new Adapter();
-                        if (_adap.updateProduct(_product)) {
+                        if (_adap.updateProduct(_product, _image)) {
                             response.sendRedirect("product.jsp");
                         } else {
                             _msg = "Sorry, an error occurred while processing your request";

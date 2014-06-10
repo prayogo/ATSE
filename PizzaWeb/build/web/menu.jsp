@@ -129,7 +129,7 @@
                             %>
                             <div class="col-31" style="margin-right:<%=margin%>px">
                                 <div class="thumbnail"> 
-                                    <img src="img/meatlovers_540x540.jpg" alt="" >
+                                    <div style="height: 380px; vertical-align: middle; background:url('img/<%=_product.getImage()%>') no-repeat center center;background-size:100% auto;"></div>
                                     <div class="caption" name="caption">
                                         <span style="height:28px; display:block; overflow:hidden; font-size:20px; font-weight:700">
                                             <%= _product.getName()%></span>

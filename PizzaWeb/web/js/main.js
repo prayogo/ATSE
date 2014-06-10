@@ -62,8 +62,15 @@ function btnFileClick(){
         var lblFile = document.getElementById('lblFile');
         var productImage = document.getElementById('hdnProductImage');
         
-        lblFile.innerHTML = document.getElementById('fileImage').files[0].name;
-        productImage.value = document.getElementById('fileImage').files[0].name;
+        if (document.getElementById('fileImage').files[0].type != "image/jpeg"){
+            document.getElementById('fileImage').value = "";
+            alert("Please select image file with extension .JPG or .JPEG");
+        }else{
+            lblFile.innerHTML = document.getElementById('fileImage').files[0].name;
+            productImage.value = document.getElementById('fileImage').files[0].name;
+        }
+        
+        
         
     };
 }
